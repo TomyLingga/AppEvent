@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailEventActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollview_detail">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img_poster_detail"
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                android:scaleType="centerCrop"
+                android:layout_margin="20dp"
+                android:background="@drawable/ic_launcher_background" />
+            <Button
+                android:id="@+id/btn_join"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:text="JOIN"
+                android:textColor="#ffffff"
+                android:background="@color/colorPrimaryDark"
+                android:layout_below="@+id/img_poster_detail"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/tv_nama_event_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/btn_join"
+                android:text="Nama Event"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_lokasi_event_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/tv_nama_event_detail"
+                android:text="Lokasi Event"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
+                android:layout_gravity="center"/>
+
+            <RelativeLayout
+                android:id="@+id/lay_waktu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_lokasi_event_detail"
+                android:layout_marginTop="1dp"
+                android:layout_marginStart="20dp"
+                >
+
+                <TextView
+                    android:id="@+id/tv_tanggal_event_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="tanggal"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorBlack" />
+
+                <TextView
+                    android:id="@+id/koma"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=","
+                    android:textSize="16sp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginStart="85dp"/>
+                <TextView
+                    android:id="@+id/tv_jam_event_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="100dp"
+                    android:text="Waktu Event"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorBlack"
+                    />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_deskripsi_event_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/lay_waktu"
+                android:text="Deskripsi Event"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
+                android:layout_marginBottom="10dp"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>
