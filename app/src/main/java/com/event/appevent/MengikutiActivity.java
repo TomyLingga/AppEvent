@@ -1,15 +1,13 @@
 package com.event.appevent;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.event.appevent.adapter.EventAdapter;
 import com.event.appevent.model.Event;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MengikutiActivity extends AppCompatActivity {

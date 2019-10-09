@@ -1,7 +1,7 @@
 package com.event.appevent;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.event.appevent.model.Event;
-import com.event.appevent.model.EventTes;
 import com.event.appevent.network.ApiClient;
 import com.event.appevent.network.ApiInterface;
 import com.squareup.picasso.Picasso;

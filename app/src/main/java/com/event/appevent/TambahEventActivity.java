@@ -1,15 +1,12 @@
 package com.event.appevent;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.database.Cursor;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,23 +16,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.event.appevent.model.Event;
 import com.event.appevent.network.ApiClient;
 import com.event.appevent.network.ApiInterface;
-import com.vincent.filepicker.activity.ImagePickActivity;
+import com.fxn.pix.Options;
+import com.fxn.pix.Pix;
+import com.fxn.utility.PermUtil;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import pub.devrel.easypermissions.EasyPermissions;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.ArrayList;
 
 public class TambahEventActivity extends AppCompatActivity {
     EditText namaTambahEvent;
@@ -51,7 +41,9 @@ public class TambahEventActivity extends AppCompatActivity {
 
     ApiInterface mApiInterface;
 
-    private static final int INTENT_REQUEST_CODE = 100;
+    String imagePosterPath;
+
+    private static final int REQUEST_CODE_CHOOSE = 100;
 
 
 
@@ -85,9 +77,43 @@ public class TambahEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                imagePicker();
 
             }
         });
+    }
+
+    protected void imagePicker(){
+        Pix.start(TambahEventActivity.this, Options.init().setRequestCode(100));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
+            ArrayList<String> returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
+            if(returnValue.size()>0){
+                imagePosterPath = returnValue.get(0);
+                Bitmap bm = BitmapFactory.decodeFile(imagePosterPath);
+                imageView.setImageBitmap(bm);
+                Log.d("hahaha", "Selected: " + imagePosterPath);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PermUtil.REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    imagePicker();
+                } else {
+                    Toast.makeText(TambahEventActivity.this, "Approve permissions to open Pix ImagePicker", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
     }
 
 //    private void initViews() {
@@ -118,25 +144,25 @@ public class TambahEventActivity extends AppCompatActivity {
 //        });
 //    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i("haha", "onActivityResult");
-//        if (requestCode == INTENT_REQUEST_CODE) {
-//
-//            if (resultCode == RESULT_OK) {
-//
-//                try {
-//
-//                    InputStream is = getContentResolver().openInputStream(data.getData());
-//
-//                   // uploadImage(getBytes(is));
-//
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        Log.i("haha", "onActivityResult");
+////        if (requestCode == INTENT_REQUEST_CODE) {
+////
+////            if (resultCode == RESULT_OK) {
+////
+////                try {
+////
+////                    InputStream is = getContentResolver().openInputStream(data.getData());
+////
+////                   // uploadImage(getBytes(is));
+////
+////                } catch (IOException e) {
+////                    e.printStackTrace();
+////                }
+////            }
+////        }
+//    }
 
     public byte[] getBytes(InputStream is) throws IOException {
         ByteArrayOutputStream byteBuff = new ByteArrayOutputStream();
