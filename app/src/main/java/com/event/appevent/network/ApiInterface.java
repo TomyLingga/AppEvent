@@ -6,6 +6,7 @@ import com.event.appevent.model.GetEvent;
 import com.event.appevent.model.User;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -39,15 +40,15 @@ public interface ApiInterface {
     );
 
     @Multipart
-    @FormUrlEncoded
     @POST("event/tambah")
     Call<Event> tambahEvent(
-            @Field("namaEvent") String namaEvent,
-            @Field("tanggalEvent") String tanggalEvent,
-            @Field("jamEvent") String jamEvent,
-            @Field("jumlahPesertaEvent") String jumlahPesertaEvent,
-            @Field("lokasiEvent") String lokasiEvent,
-            @Field("deskripsiEvent") String deskripsiEvent,
-            @Part MultipartBody.Part image
+            @Part("uid") RequestBody uid,
+            @Part("namaEvent") RequestBody namaEvent,
+            @Part("tanggalEvent") RequestBody tanggalEvent,
+            @Part("jamEvent") RequestBody jamEvent,
+            @Part("jumlahPesertaEvent") RequestBody jumlahPesertaEvent,
+            @Part("lokasiEvent") RequestBody lokasiEvent,
+            @Part("deskripsiEvent") RequestBody deskripsiEvent,
+            @Part MultipartBody.Part brosurEvent
     );
 }

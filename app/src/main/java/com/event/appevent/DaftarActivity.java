@@ -13,9 +13,15 @@ import com.event.appevent.model.User;
 import com.event.appevent.network.ApiClient;
 import com.event.appevent.network.ApiInterface;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.event.appevent.network.ApiClient.BASE_URL;
 
 public class DaftarActivity extends AppCompatActivity {
     EditText daftarUsername;

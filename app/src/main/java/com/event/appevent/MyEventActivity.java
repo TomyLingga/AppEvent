@@ -40,6 +40,8 @@ public class MyEventActivity extends AppCompatActivity {
         if (session.isLoggedIn()) {
             user = session.getUserDetails();
             Log.i("dataUser2", ""+user.toString());
+            Log.i("dataUser2", ""+user.getId());
+
 
         }
 

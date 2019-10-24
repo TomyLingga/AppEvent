@@ -3,6 +3,16 @@ package com.event.appevent;
 import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -16,16 +26,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.event.appevent.model.Event;
+import com.event.appevent.model.User;
 import com.event.appevent.network.ApiClient;
 import com.event.appevent.network.ApiInterface;
 import com.fxn.pix.Options;
 import com.fxn.pix.Pix;
 import com.fxn.utility.PermUtil;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+
+import static android.app.Activity.RESULT_OK;
+import static com.event.appevent.network.ApiClient.BASE_URL;
 
 public class TambahEventActivity extends AppCompatActivity {
     EditText namaTambahEvent;
@@ -43,7 +61,12 @@ public class TambahEventActivity extends AppCompatActivity {
 
     String imagePosterPath;
 
+    User user;
+    SharedPrefManager session;
+
     private static final int REQUEST_CODE_CHOOSE = 100;
+
+    //private ApiInterface apiInterface;
 
 
 
@@ -63,6 +86,29 @@ public class TambahEventActivity extends AppCompatActivity {
         deskripsiTambahEvent        = (EditText) this.findViewById(R.id.edit_deskripsi_event);
         imageView                   = (ImageView) this.findViewById(R.id.ivAttachment);
         mApiInterface               = ApiClient.getClient().create(ApiInterface.class);
+
+        session = new SharedPrefManager(getApplicationContext());
+
+        if (session.isLoggedIn()) {
+            user = session.getUserDetails();
+            Log.i("dataUser2", ""+user.getId());
+        }
+
+
+//        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//
+//        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+//                .addInterceptor(loggingInterceptor)
+//                .build();
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(BASE_URL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .client(okHttpClient)
+//                .build();
+//
+//        apiInterface = retrofit.create(ApiInterface.class);
 
         tambahEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +142,10 @@ public class TambahEventActivity extends AppCompatActivity {
                 imagePosterPath = returnValue.get(0);
                 Bitmap bm = BitmapFactory.decodeFile(imagePosterPath);
                 imageView.setImageBitmap(bm);
-                Log.d("hahaha", "Selected: " + imagePosterPath);
+                inputNamaBrosurTambahEvent.setText(imagePosterPath);
+                File file = new File(imagePosterPath);
+                Log.d("hahaha", "Selected: " + file.getName());
+
             }
         }
     }
@@ -164,19 +213,19 @@ public class TambahEventActivity extends AppCompatActivity {
 ////        }
 //    }
 
-    public byte[] getBytes(InputStream is) throws IOException {
-        ByteArrayOutputStream byteBuff = new ByteArrayOutputStream();
-
-        int buffSize = 1024;
-        byte[] buff = new byte[buffSize];
-
-        int len = 0;
-        while ((len = is.read(buff)) != -1) {
-            byteBuff.write(buff, 0, len);
-        }
-
-        return byteBuff.toByteArray();
-    }
+//    public byte[] getBytes(InputStream is) throws IOException {
+//        ByteArrayOutputStream byteBuff = new ByteArrayOutputStream();
+//
+//        int buffSize = 1024;
+//        byte[] buff = new byte[buffSize];
+//
+//        int len = 0;
+//        while ((len = is.read(buff)) != -1) {
+//            byteBuff.write(buff, 0, len);
+//        }
+//
+//        return byteBuff.toByteArray();
+//    }
 
 //    private void uploadImage(byte[] imageBytes) {
 
@@ -232,32 +281,70 @@ public class TambahEventActivity extends AppCompatActivity {
 //    }
 
     private void tambahEventBaru() {
-        String namaEvent = namaTambahEvent.getText().toString().trim();
-        Log.i("nama User", "nama = " + namaEvent);
-        String tanggalEvent = tanggalTambahEvent.getText().toString().trim();
-        String jamEvent = jamTambahEvent.getText().toString().trim();
-        String jumlahPesertaEvent = jumlahPesertaTambahEvent.getText().toString().trim();
-        String lokasiEvent = lokasiTambahEvent.getText().toString().trim();
-        String deskripsiEvent = deskripsiTambahEvent.getText().toString().trim();
-        //inputNamaBrosurTambahEvent.setText(event.getNamaEvent());
+        String namaEventRequest = namaTambahEvent.getText().toString().trim();
+        Log.i("nama event", "nama = " + namaEventRequest);
+        String tanggalEventRequest = tanggalTambahEvent.getText().toString().trim();
+        String jamEventRequest = jamTambahEvent.getText().toString().trim();
+        String jumlahPesertaEventRequest = jumlahPesertaTambahEvent.getText().toString().trim();
+        String lokasiEventRequest = lokasiTambahEvent.getText().toString().trim();
+        String deskripsiEventRequest = deskripsiTambahEvent.getText().toString().trim();
+        //inputNamaBrosurTambahEvent.setText(imagePosterPath);
+        File file = new File(imagePosterPath);
+        String uidRequest = user.getId().toString();
 
-//        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imageBytes);
-//
-//        MultipartBody.Part body = MultipartBody.Part.createFormData("image", "image.jpg", requestFile);
-//
-//        Call<Event> eventCall = mApiInterface.tambahEvent(namaEvent, tanggalEvent, jamEvent, jumlahPesertaEvent, lokasiEvent, deskripsiEvent);
-//        eventCall.enqueue(new Callback<Event>() {
-//            @Override
-//            public void onResponse(Call<Event> call, Response<Event>
-//                    response) {
-//                Toast.makeText(getApplicationContext(), "berhasil", Toast.LENGTH_LONG).show();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Event> call, Throwable t) {
-//                Log.e("Retrofit Get", t.toString());
-//            }
-//        });
+
+//        RequestBody namaEvent           = RequestBody.create(MediaType.parse("text/plain"), namaEventRequest);
+//        RequestBody tanggalEvent        = RequestBody.create(MediaType.parse("text/plain"), tanggalEventRequest);
+//        RequestBody jamEvent            = RequestBody.create(MediaType.parse("text/plain"), jamEventRequest);
+//        RequestBody jumlahPesertaEvent  = RequestBody.create(MediaType.parse("text/plain"), jumlahPesertaEventRequest);
+//        RequestBody lokasiEvent         = RequestBody.create(MediaType.parse("text/plain"), lokasiEventRequest);
+//        RequestBody deskripsiEvent      = RequestBody.create(MediaType.parse("text/plain"), deskripsiEventRequest);
+//        RequestBody uid                 = RequestBody.create(MediaType.parse("number"), uidRequest);
+        RequestBody namaEvent           = RequestBody.create(MediaType.parse("text/plain"), namaEventRequest);
+        RequestBody tanggalEvent        = RequestBody.create(MediaType.parse("text/plain"), tanggalEventRequest);
+        RequestBody jamEvent            = RequestBody.create(MediaType.parse("text/plain"), jamEventRequest);
+        RequestBody jumlahPesertaEvent  = RequestBody.create(MediaType.parse("text/plain"), jumlahPesertaEventRequest);
+        RequestBody lokasiEvent         = RequestBody.create(MediaType.parse("text/plain"), lokasiEventRequest);
+        RequestBody deskripsiEvent      = RequestBody.create(MediaType.parse("text/plain"), deskripsiEventRequest);
+        RequestBody uid                 = RequestBody.create(MediaType.parse("number"), uidRequest);
+
+        MultipartBody.Part brosurEvent = MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("multipart/form-data"), file));
+        //MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+
+        Call eventCall = mApiInterface.tambahEvent(uid, namaEvent, tanggalEvent, jamEvent, jumlahPesertaEvent, lokasiEvent, deskripsiEvent, brosurEvent);
+        Log.d("responnya","wowo");
+        Log.d("responnya","   "+uid+" "+uidRequest);
+        Log.d("responnya","   "+namaEvent+"  "+namaEventRequest);
+        Log.d("responnya","   "+tanggalEvent+"  "+tanggalEventRequest);
+        Log.d("responnya","   "+jamEvent+"   "+jamEventRequest);
+        Log.d("responnya","   "+jumlahPesertaEvent+"   "+jumlahPesertaEventRequest);
+        Log.d("responnya","   "+lokasiEvent+"  "+lokasiEventRequest);
+        Log.d("responnya","   "+deskripsiEvent+"   "+deskripsiEventRequest);
+        Log.d("responnya","   "+brosurEvent+"   "+file);
+
+        eventCall.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response
+                    response) {
+                    Log.d("responnya", "ini adalah respon " + response.toString());
+
+                    Toast.makeText(getApplicationContext(), "AWOKWAWOKAWOKAWOKAWOK", Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Log.e("Retrofit Get", t.toString());
+            }
+        });
+
+        if(eventCall.isExecuted()){
+            Log.d("responnya", "sukses");
+
+        }else{
+            Log.d("responnya", "fail");
+        }
+
     }
 
 }
