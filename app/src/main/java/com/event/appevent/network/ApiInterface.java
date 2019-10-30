@@ -1,8 +1,8 @@
 package com.event.appevent.network;
 
 import com.event.appevent.model.Event;
-import com.event.appevent.model.EventTes;
 import com.event.appevent.model.GetEvent;
+import com.event.appevent.model.ResponseEvent;
 import com.event.appevent.model.User;
 
 import okhttp3.MultipartBody;
@@ -41,14 +41,15 @@ public interface ApiInterface {
 
     @Multipart
     @POST("event/tambah")
-    Call<Event> tambahEvent(
+    Call<ResponseEvent> tambahEvent(
             @Part("uid") RequestBody uid,
             @Part("namaEvent") RequestBody namaEvent,
             @Part("tanggalEvent") RequestBody tanggalEvent,
             @Part("jamEvent") RequestBody jamEvent,
             @Part("jumlahPesertaEvent") RequestBody jumlahPesertaEvent,
             @Part("lokasiEvent") RequestBody lokasiEvent,
-            @Part("deskripsiEvent") RequestBody deskripsiEvent,
-            @Part MultipartBody.Part brosurEvent
+            @Part MultipartBody.Part brosurEvent,
+            @Part("deskripsiEvent") RequestBody deskripsiEvent
+
     );
 }

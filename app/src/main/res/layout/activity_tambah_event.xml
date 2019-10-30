@@ -6,124 +6,132 @@
     android:layout_height="match_parent"
     tools:context=".TambahEventActivity">
 
-    <EditText
-        android:id="@+id/edit_nama_event"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nama Event"
-        android:inputType="text"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="50dp"/>
+        android:layout_height="match_parent"
+        android:id="@+id/scrollview_detail">
 
-    <EditText
-        android:id="@+id/edit_tanggal_event"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Tanggal"
-        android:inputType="text"
-        android:layout_below="@+id/edit_nama_event"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="10dp" />
-
-    <EditText
-        android:id="@+id/edit_waktu_event"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Jam"
-        android:inputType="text"
-        android:layout_below="@+id/edit_tanggal_event"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="10dp" />
-
-    <EditText
-        android:id="@+id/edit_max_peserta"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Jumlah Peserta"
-        android:inputType="number"
-        android:layout_below="@id/edit_waktu_event"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"/>
-
-    <EditText
-        android:id="@+id/edit_lokasi_event"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Lokasi"
-        android:inputType="text"
-        android:layout_below="@id/edit_max_peserta"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lay_upload_brosur"
-        android:layout_below="@+id/edit_lokasi_event"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="10dp">
-
-        <TextView
-            android:id="@+id/tv_brosur_event"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Brosur"
-            android:textSize="18sp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="3dp"/>
+            android:id="@+id/lay_tambah">
 
-        <Button
-            android:id="@+id/btn_upload_brosur"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/ic_photo_camera"
-            android:layout_alignParentRight="true"/>
+            <EditText
+                android:id="@+id/edit_nama_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama Event"
+                android:inputType="text"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="120dp"
+                android:layout_marginTop="50dp"/>
+
+            <EditText
+                android:id="@+id/edit_tanggal_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tanggal"
+                android:inputType="date"
+                android:layout_below="@+id/edit_nama_event"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="120dp"
+                android:layout_marginTop="10dp" />
+
+            <EditText
+                android:id="@+id/edit_waktu_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Jam"
+                android:inputType="datetime"
+                android:layout_below="@+id/edit_tanggal_event"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="120dp"
+                android:layout_marginTop="10dp" />
+
+            <EditText
+                android:id="@+id/edit_max_peserta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Jumlah Peserta"
+                android:inputType="number"
+                android:layout_below="@id/edit_waktu_event"
+                android:layout_marginStart="120dp"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"/>
+
+            <EditText
+                android:id="@+id/edit_lokasi_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Lokasi"
+                android:inputType="text"
+                android:layout_below="@id/edit_max_peserta"
+                android:layout_marginStart="120dp"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lay_upload_brosur"
+                android:layout_below="@+id/edit_lokasi_event"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="120dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/tv_brosur_event"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Brosur"
+                    android:textSize="18sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="3dp"/>
+
+                <Button
+                    android:id="@+id/btn_upload_brosur"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/ic_camera"
+                    android:layout_alignParentRight="true"/>
 
 
-    </RelativeLayout>
+            </RelativeLayout>
 
-    <EditText
-        android:id="@+id/edit_deskripsi_event"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Deskripsi"
-        android:inputType="textMultiLine"
-        android:layout_below="@+id/lay_upload_brosur"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="120dp"/>
-    <Button
-        android:id="@+id/btn_upload_event"
-        android:layout_width="180dp"
-        android:layout_height="40dp"
-        android:layout_below="@+id/edit_deskripsi_event"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
-        android:text="Tambah Event"
-        android:background="@color/colorPrimaryDark"/>
+            <EditText
+                android:id="@+id/edit_deskripsi_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Deskripsi"
+                android:inputType="textMultiLine"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="120dp"
+                android:layout_below="@id/lay_upload_brosur"/>
 
-    <ImageView
-        android:id="@+id/ivAttachment"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/ic_launcher_background"
-        android:layout_below="@id/btn_upload_event"/>
-    <TextView
-        android:id="@+id/tv_file_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivAttachment"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:textColor="@color/colorBlack"/>
+            <ImageView
+                android:src="@drawable/ic_launcher_background"
+                android:id="@+id/ivAttachment"
+                android:layout_width="200dp"
+                android:layout_height="250dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_below="@+id/edit_deskripsi_event" />
+
+            <Button
+                android:id="@+id/btn_upload_event"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/ivAttachment"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:text="Tambah Event"
+                android:background="@color/colorPrimaryDark" />
+
+
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 
 
