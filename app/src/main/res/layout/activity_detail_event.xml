@@ -25,19 +25,31 @@
             <Button
                 android:id="@+id/btn_join"
                 android:layout_width="150dp"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:text="JOIN"
                 android:textColor="#ffffff"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/round_button"
                 android:layout_below="@+id/img_poster_detail"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerHorizontal="true"
+                android:visibility="visible"/>
+
+            <Button
+                android:id="@+id/btn_daftar_peserta"
+                android:layout_width="180dp"
+                android:layout_height="35dp"
+                android:text="Daftar Peserta"
+                android:textColor="#ffffff"
+                android:background="@drawable/round_button"
+                android:layout_below="@+id/img_poster_detail"
+                android:layout_centerHorizontal="true"
+                android:visibility="invisible"/>
 
             <TextView
                 android:id="@+id/tv_nama_event_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:layout_below="@+id/btn_join"
                 android:text="Nama Event"
                 android:textColor="@color/colorBlack"
@@ -61,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_lokasi_event_detail"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="3dp"
                 android:layout_marginStart="20dp"
                 >
 
@@ -69,7 +81,7 @@
                     android:id="@+id/tv_tanggal_event_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="tanggal"
+                    android:text="Tanggal"
                     android:textSize="16sp"
                     android:textColor="@color/colorBlack" />
 

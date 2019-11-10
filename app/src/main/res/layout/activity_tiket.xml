@@ -28,7 +28,7 @@
             android:text="Nama"/>
 
         <TextView
-            android:id="@+id/tv_nama_peserta_tiket"
+            android:id="@+id/tv_nama_event_tiket"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Thanos"
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Waktu"
-            android:layout_below="@+id/tv_nama_peserta_tiket"
+            android:layout_below="@+id/tv_nama_event_tiket"
             android:layout_marginTop="20dp"/>
 
         <TextView
@@ -97,11 +97,12 @@
         <Button
             android:id="@+id/btn_download_tiket"
             android:layout_width="150dp"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
             android:text="DOWNLOAD"
             android:layout_below="@+id/card_tiket"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:background="@color/colorPrimaryDark"/>
+            android:background="@drawable/round_button"
+            android:visibility="visible"/>
 
 </RelativeLayout>

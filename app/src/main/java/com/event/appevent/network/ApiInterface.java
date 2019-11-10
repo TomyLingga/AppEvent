@@ -2,7 +2,9 @@ package com.event.appevent.network;
 
 import com.event.appevent.model.Event;
 import com.event.appevent.model.GetEvent;
+import com.event.appevent.model.ListDataTamu;
 import com.event.appevent.model.ResponseEvent;
+import com.event.appevent.model.Ticket;
 import com.event.appevent.model.User;
 
 import okhttp3.MultipartBody;
@@ -52,4 +54,22 @@ public interface ApiInterface {
             @Part("deskripsiEvent") RequestBody deskripsiEvent
 
     );
+
+    @FormUrlEncoded
+    @POST("ticket/join")
+    Call<Ticket> tambahTicket(
+            @Field("uid") Integer uid,
+            @Field("eid") Integer eid
+    );
+
+    @GET("ticket/{eid}/{uid}")
+    Call<Ticket> getTicketById(
+            @Path("eid") String eid,
+            @Path("uid") String uid
+    );
+
+    @GET("ticket/{eid}")
+    Call<ListDataTamu> getDataPeserta(
+            @Path("eid") Integer eid
+            );
 }

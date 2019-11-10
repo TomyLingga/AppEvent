@@ -19,6 +19,7 @@ import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder> {
 
+
     private List<Event> eventList;
 
     public EventAdapter(List<Event> eventList) {
@@ -46,9 +47,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             @Override
             public void onClick(View view) {
                 Intent mIntent = new Intent(view.getContext(), DetailEventActivity.class);
-                mIntent.putExtra("Id", eventList.get(i).getId());
-                Log.i("idPut", "id : "+eventList.get(i).getId());
+                mIntent.putExtra("idEvent", eventList.get(i).getId());
+                Log.i("idPutEvent", "id : "+eventList.get(i).getId());
                 mIntent.putExtra("Nama", eventList.get(i).getNamaEvent());
+                mIntent.putExtra("Uid", eventList.get(i).getUid());
                 view.getContext().startActivity(mIntent);
             }
         });

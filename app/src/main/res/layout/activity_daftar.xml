@@ -9,7 +9,7 @@
         android:id="@+id/edit_username_daftar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="username"
+        android:hint="Nama Lengkap"
         android:inputType="text"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -18,7 +18,7 @@
         android:id="@+id/edit_email_daftar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="email"
+        android:hint="E-mail"
         android:inputType="textEmailAddress"
         android:layout_below="@+id/edit_username_daftar"
         android:layout_centerVertical="true"
@@ -29,7 +29,7 @@
         android:id="@+id/edit_password_daftar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="password"
+        android:hint="Password"
         android:inputType="textPassword"
         android:layout_below="@+id/edit_email_daftar"
         android:layout_centerVertical="true"
@@ -40,7 +40,7 @@
         android:id="@+id/edit_password_daftar2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="re-enter password"
+        android:hint="Konfirmasi Password"
         android:inputType="textPassword"
         android:layout_below="@+id/edit_password_daftar"
         android:layout_centerVertical="true"
@@ -51,14 +51,14 @@
     <Button
         android:id="@+id/btn_register"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:text="REGISTER"
         android:textColor="#ffffff"
         android:layout_below="@+id/edit_password_daftar2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:layout_marginStart="120dp"
-        android:background="@color/colorPrimaryDark"/>
+        android:background="@drawable/round_button"/>
 
 
 

@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.event.appevent.model.Event;
+import com.event.appevent.model.Ticket;
+import com.event.appevent.model.User;
 import com.event.appevent.network.ApiClient;
 import com.event.appevent.network.ApiInterface;
 import com.squareup.picasso.Picasso;
@@ -20,16 +22,23 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DetailEventActivity extends AppCompatActivity {
-    Integer idEvent = 0;
+    Integer idEvent = 0 ;
+    Integer uIdEvent = 0;
     ApiInterface mApiInterface;
     ImageView poster;
-    Button btn_join;
+    Button btn_join, btn_daftar_peserta;
     TextView detailNamaEvent;
     TextView detailLokasiEvent;
     TextView detailJamEvent;
     TextView detailTanggalEvent;
     TextView detailDeskripsiEvent;
     Event event;
+    SharedPrefManager session;
+    User user;
+    Intent i;
+
+    Integer uid;
+    Integer eid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +46,7 @@ public class DetailEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_event);
 
         btn_join = (Button) this.findViewById(R.id.btn_join);
+        btn_daftar_peserta = (Button) this.findViewById(R.id.btn_daftar_peserta);
         poster = (ImageView) this.findViewById(R.id.img_poster_detail);
         detailNamaEvent = (TextView) this.findViewById(R.id.tv_nama_event_detail);
         detailLokasiEvent = (TextView) this.findViewById(R.id.tv_lokasi_event_detail);
@@ -45,13 +55,57 @@ public class DetailEventActivity extends AppCompatActivity {
         detailDeskripsiEvent = (TextView) this.findViewById(R.id.tv_deskripsi_event_detail);
 
         Intent intent = getIntent();
-        idEvent = intent.getIntExtra("Id", 0);
-        Log.i("IdEvent", "id - " + idEvent);
+        idEvent = intent.getIntExtra("idEvent",0);
+        Log.i("IdEventDetail", "id - " + idEvent);
+
+        session = new SharedPrefManager(getApplicationContext());
+
+        if (session.isLoggedIn()) {
+            user = session.getUserDetails();
+            Log.i("dataUser2", ""+user.getId());
+        }
+
+        uIdEvent = intent.getIntExtra("Uid", 0);
+        Log.i("user Id", uIdEvent.toString());
+
+        // Periksa user id yang login dengan yang membuat event
+        // untuk menghilangkan button JOIN
+        if(session.getUserDetails().getId().equals(uIdEvent)){
+            btn_join.setVisibility(View.GONE);
+            btn_daftar_peserta.setVisibility(View.VISIBLE);
+        } else {
+            btn_join.setVisibility(View.VISIBLE);
+            btn_daftar_peserta.setVisibility(View.GONE);
+        }
+
 
         btn_join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(DetailEventActivity.this, TiketActivity.class);
+                i = new Intent(DetailEventActivity.this, TiketActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString("EXTRA_uid",user.getId().toString());
+                extras.putString("EXTRA_eid",event.getId().toString());
+                extras.putString("EXTRA_namaEvent",event.getNamaEvent());
+                extras.putString("EXTRA_lokasiEvent",event.getLokasiEvent());
+                extras.putString("EXTRA_tanggalEvent",event.getTanggalEvent());
+                extras.putString("EXTRA_jamEvent",event.getJamEvent());
+
+                i.putExtras(extras);
+
+                Log.i("IdEvent",  "uid: "+user.getId()+" eid: "+event.getId());
+
+                startActivity(i);
+                join();
+
+            }
+        });
+
+        btn_daftar_peserta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(DetailEventActivity.this, PendataanTamuActivity.class);
+                i.putExtra("idEvent",event.getId());
                 startActivity(i);
             }
         });
@@ -90,6 +144,26 @@ public class DetailEventActivity extends AppCompatActivity {
                 Log.e("Retrofit Get", t.toString());
             }
         });
+    }
+
+    public void join() {
+
+        uid = user.getId();
+        eid = event.getId();
+        Call<Ticket> eventCall = mApiInterface.tambahTicket(uid, eid);
+            eventCall.enqueue(new Callback<Ticket>() {
+                @Override
+                public void onResponse(Call<Ticket> call, Response<Ticket> response) {
+                    Toast.makeText(getApplicationContext(),"berhasil", Toast.LENGTH_LONG).show();
+                    Log.i("Retrofit Get", response.toString());
+
+                }
+
+                @Override
+                public void onFailure(Call<Ticket> call, Throwable t) {
+                    Log.e("Retrofit Get", t.toString());
+                }
+            });
     }
 
 }
