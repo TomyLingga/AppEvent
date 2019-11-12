@@ -5,6 +5,7 @@ public class Ticket {
     private Integer uid;
     private Integer eid;
     private String qrCode;
+    private Integer kehadiran;
 
     public Integer getId() {
         return id;
@@ -36,5 +37,13 @@ public class Ticket {
 
     public void setQrCode(String qrCode) {
         this.qrCode = qrCode;
+    }
+
+    public Integer getKehadiran() {
+        return kehadiran;
+    }
+
+    public void setKehadiran(Integer kehadiran) {
+        this.kehadiran = kehadiran;
     }
 }

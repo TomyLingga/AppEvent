@@ -17,6 +17,7 @@ import com.event.appevent.adapter.EventAdapter;
 import com.event.appevent.model.DataTamu;
 import com.event.appevent.model.GetEvent;
 import com.event.appevent.model.ListDataTamu;
+import com.event.appevent.model.Ticket;
 import com.event.appevent.network.ApiClient;
 import com.event.appevent.network.ApiInterface;
 
@@ -35,6 +36,7 @@ public class PendataanTamuActivity extends AppCompatActivity {
     ApiInterface mApiInterface;
     Integer idEvent = 0;
     Button scan;
+    Ticket ticket;
 
 
 

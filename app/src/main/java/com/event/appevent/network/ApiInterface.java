@@ -72,4 +72,9 @@ public interface ApiInterface {
     Call<ListDataTamu> getDataPeserta(
             @Path("eid") Integer eid
             );
+
+    @GET("ticket/scan/{qrCode}")
+    Call<Ticket> scanned(
+            @Path("qrCode") String qrCode
+    );
 }
