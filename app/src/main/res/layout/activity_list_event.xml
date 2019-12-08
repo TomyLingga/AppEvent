@@ -30,10 +30,10 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"/>
 
-<!--                <com.miguelcatalan.materialsearchview.MaterialSearchView-->
-<!--                    android:id="@+id/search_view"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content" />-->
+                <com.miguelcatalan.materialsearchview.MaterialSearchView
+                    android:id="@+id/search_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>

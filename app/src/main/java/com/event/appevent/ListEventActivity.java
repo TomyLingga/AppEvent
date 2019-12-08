@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.event.appevent.adapter.EventAdapter;
@@ -35,6 +36,7 @@ public class ListEventActivity extends AppCompatActivity {
     List<Event> eventList;
     ApiInterface mApiInterface;
     SharedPrefManager session;
+    MaterialSearchView searchView;
 
 
     @Override
@@ -49,7 +51,6 @@ public class ListEventActivity extends AppCompatActivity {
 
         rec_list_event = this.findViewById(R.id.rec_event);
 
-//        MaterialSearchView searchView = (MaterialSearchView) findViewById(R.id.search_view);
         FloatingActionButton btn_tambah_event = (FloatingActionButton) this.findViewById(R.id.btn_tambah_event);
 
         session = new SharedPrefManager(getApplicationContext());
@@ -67,15 +68,65 @@ public class ListEventActivity extends AppCompatActivity {
 
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         refresh();
+
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String cari) {
+                Toast.makeText(getBaseContext(), cari, Toast.LENGTH_LONG).show();
+                Call<GetEvent> eventCall = mApiInterface.search(cari);
+                eventCall.enqueue(new Callback<GetEvent>() {
+                    @Override
+                    public void onResponse(Call<GetEvent> call, Response<GetEvent> response) {
+                        if (response.body() != null) {
+                            eventList = response.body().getListDataEvent();
+
+                            eventAdapter = new EventAdapter(eventList);
+                            rec_list_event.setAdapter(eventAdapter);
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Data Event tidak ada", Toast.LENGTH_LONG).show();
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetEvent> call, Throwable t) {
+
+                    }
+                });
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Toast.makeText(getBaseContext(), newText, Toast.LENGTH_LONG).show();
+                Log.i("haha","newText"+newText);
+                return false;
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.header_menu, menu);
-//        MenuItem item = menu.findItem(R.id.action_search);
-//        searchView.setMenuItem(item);
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
 
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override

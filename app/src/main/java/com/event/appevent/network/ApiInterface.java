@@ -84,9 +84,8 @@ public interface ApiInterface {
             @Path("userId") Integer userId
     );
 
-//    @FormUrlEncoded
-//    @GET("search")
-//    Call<GetEvent> search(
-//            @Field("cari") String cari
-//    );
+    @GET("search/{cari}")
+    Call<GetEvent> search(
+            @Path("cari") String cari
+    );
 }
