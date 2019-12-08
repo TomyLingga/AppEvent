@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.event.appevent.R;
@@ -19,6 +20,9 @@ public class DataTamuAdapter extends RecyclerView.Adapter<DataTamuAdapter.DataTa
 
     Context context;
     List<DataTamu> dataTamuList;
+    Integer kehadiran;
+    ImageView uncek;
+    ImageView cek;
 
     public DataTamuAdapter(List<DataTamu> dataTamuList) {
         this.dataTamuList = dataTamuList;
@@ -33,32 +37,51 @@ public class DataTamuAdapter extends RecyclerView.Adapter<DataTamuAdapter.DataTa
         return mViewHolder;
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull DataTamuViewHolder dataTamuViewHolder, int i) {
-        DataTamu dataTamu = dataTamuList.get(i);
-
-        dataTamuViewHolder.namaPeserta.setText(dataTamu.getName());
-        Log.i("namaPeserta", dataTamu.getName());
-    }
-
-    // Errornya sizenya null
-    // int java.util.List.size()' on a null object reference2
-    @Override
-    public int getItemCount() {
-        return dataTamuList.size();
-
-    }
-
     class DataTamuViewHolder extends RecyclerView.ViewHolder {
 
         TextView namaPeserta;
+        //Integer kehadiran;
 
         public DataTamuViewHolder(@NonNull View itemView) {
             super(itemView);
 
             namaPeserta = itemView.findViewById(R.id.tv_nama_peserta_tamu);
+            uncek = itemView.findViewById(R.id.img_cek_kehadiran);
+            cek = itemView.findViewById(R.id.img_cek_kehadiran_true);
 
         }
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull DataTamuViewHolder dataTamuViewHolder, int i) {
+        DataTamu dataTamu = dataTamuList.get(i);
+
+        dataTamuViewHolder.namaPeserta.setText(dataTamu.getName());
+        kehadiran = dataTamu.getKehadiran();
+        Log.i("namaPeserta", dataTamu.getName());
+        Log.i("namaPeserta", "kehadiran    "+kehadiran);
+
+        if(kehadiran==1){
+            uncek.setVisibility(View.GONE);
+            cek.setVisibility(View.VISIBLE);
+        }else{
+            uncek.setVisibility(View.VISIBLE);
+            cek.setVisibility(View.GONE);
+        }
+
+//        if(session.getUserDetails().getId().equals(uIdEvent)){
+//            btn_join.setVisibility(View.GONE);
+//            btn_daftar_peserta.setVisibility(View.VISIBLE);
+//        } else {
+//            btn_join.setVisibility(View.VISIBLE);
+//            btn_daftar_peserta.setVisibility(View.GONE);
+//        }
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return dataTamuList.size();
 
     }
 }

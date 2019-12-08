@@ -58,11 +58,11 @@ public class TiketActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tiket);
 
-        namaEvent           = (TextView) findViewById(R.id.tv_nama_event_tiket);
-        waktuEvent          = (TextView) findViewById(R.id.tv_waktu_event_tiket);
-        lokasiEvent         = (TextView) findViewById(R.id.tv_lokasi_event_tiket);
-        qr                  = (ImageView)findViewById(R.id.img_tiket);
-        simpan              = (Button)   findViewById(R.id.btn_download_tiket);
+        namaEvent           = findViewById(R.id.tv_nama_event_tiket);
+        waktuEvent          = findViewById(R.id.tv_waktu_event_tiket);
+        lokasiEvent         = findViewById(R.id.tv_lokasi_event_tiket);
+        qr                  = findViewById(R.id.img_tiket);
+        simpan              = findViewById(R.id.btn_download_tiket);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -80,14 +80,11 @@ public class TiketActivity extends AppCompatActivity {
         lokasiEvent.setText(lokasiEvent2);
         waktuEvent.setText(tanggalEvent+" "+jamEvent);
 
-        simpan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                simpan.setVisibility(View.GONE);
-                takeScreenshot();
-                Toast.makeText(getApplicationContext(), "Tiket Sudah Tersimpan", Toast.LENGTH_LONG).show();
-                simpan.setVisibility(View.VISIBLE);
-            }
+        simpan.setOnClickListener(view -> {
+            simpan.setVisibility(View.GONE);
+            takeScreenshot();
+            Toast.makeText(getApplicationContext(), "Tiket Sudah Tersimpan", Toast.LENGTH_LONG).show();
+            simpan.setVisibility(View.VISIBLE);
         });
 
         session = new SharedPrefManager(getApplicationContext());

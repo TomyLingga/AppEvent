@@ -45,7 +45,7 @@ public class MyEventActivity extends AppCompatActivity {
 
         }
 
-        rec_list_event = (RecyclerView)this.findViewById(R.id.rec_event_saya);
+        rec_list_event = this.findViewById(R.id.rec_event_saya);
         rec_list_event.setLayoutManager(new GridLayoutManager(this, 2));
         rec_list_event.setHasFixedSize(true);
 

@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    >
 
     <EditText
         android:id="@+id/edit_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="E-mail"
+        android:textColor="@color/colorBlack"
         android:inputType="textEmailAddress"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -20,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" 
         android:hint="Password"
+        android:textColor="@color/colorBlack"
         android:inputType="textPassword"
         android:layout_below="@+id/edit_email"
         android:layout_centerVertical="true"
@@ -31,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:text="LOGIN"
-        android:textColor="#ffffff"
+        android:textColor="@color/colorWhite"
         android:layout_below="@+id/edit_password"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
@@ -44,6 +47,7 @@
         android:layout_height="wrap_content"
         android:text="Register"
         android:textSize="18sp"
+        android:textColor="@color/colorAccent"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="30dp"
         android:layout_centerHorizontal="true" />

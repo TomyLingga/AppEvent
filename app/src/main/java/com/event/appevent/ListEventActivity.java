@@ -20,6 +20,7 @@ import com.event.appevent.model.Event;
 import com.event.appevent.model.GetEvent;
 import com.event.appevent.network.ApiClient;
 import com.event.appevent.network.ApiInterface;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.List;
 
@@ -42,11 +43,13 @@ public class ListEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_event);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
 
         setSupportActionBar(toolbar);
 
         rec_list_event = this.findViewById(R.id.rec_event);
 
+//        MaterialSearchView searchView = (MaterialSearchView) findViewById(R.id.search_view);
         FloatingActionButton btn_tambah_event = (FloatingActionButton) this.findViewById(R.id.btn_tambah_event);
 
         session = new SharedPrefManager(getApplicationContext());
@@ -69,6 +72,9 @@ public class ListEventActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.header_menu, menu);
+//        MenuItem item = menu.findItem(R.id.action_search);
+//        searchView.setMenuItem(item);
+
         return true;
     }
 

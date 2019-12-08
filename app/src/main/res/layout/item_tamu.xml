@@ -1,25 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
-    android:layout_margin="10dp">
+    android:layout_height="wrap_content"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginBottom="5dp"
+    android:elevation="5dp">
 
-    <TextView
-        android:layout_marginTop="10dp"
-        android:id="@+id/tv_nama_peserta_tamu"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Peserta"
-        android:layout_centerVertical="true"
-        android:textSize="18sp"
-        android:textColor="@color/colorBlack"/>
+        android:layout_height="50dp"
+        android:layout_margin="10dp">
 
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:id="@+id/img_cek_kehadiran"
-        android:background="@drawable/ic_blank_check_box"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/tv_nama_peserta_tamu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Peserta"
+            android:layout_centerVertical="true"
+            android:textSize="18sp"
+            android:textColor="@color/colorBlack"/>
 
-</RelativeLayout>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/img_cek_kehadiran"
+            android:background="@drawable/ic_blank_check_box"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:visibility="visible"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/img_cek_kehadiran_true"
+            android:background="@drawable/ic_checks_box"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:visibility="invisible"/>
+    </RelativeLayout>
+
+
+
+</androidx.cardview.widget.CardView>

@@ -36,21 +36,18 @@ public class DaftarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daftar);
 
-        btnDaftar = (Button) this.findViewById(R.id.btn_register);
-        daftarUsername = (EditText) this.findViewById(R.id.edit_username_daftar);
-        daftarPassword = (EditText) this.findViewById(R.id.edit_password_daftar);
-        daftarPassword2 = (EditText) this.findViewById(R.id.edit_password_daftar2);
-        daftarEmail = (EditText) this.findViewById(R.id.edit_email_daftar);
+        btnDaftar = this.findViewById(R.id.btn_register);
+        daftarUsername = this.findViewById(R.id.edit_username_daftar);
+        daftarPassword = this.findViewById(R.id.edit_password_daftar);
+        daftarPassword2 = this.findViewById(R.id.edit_password_daftar2);
+        daftarEmail = this.findViewById(R.id.edit_email_daftar);
 
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-        btnDaftar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent3 = new Intent(DaftarActivity.this, MainActivity.class);
-                startActivity(intent3);
-                kirimData();
-            }
+        btnDaftar.setOnClickListener(v -> {
+            Intent intent3 = new Intent(DaftarActivity.this, MainActivity.class);
+            startActivity(intent3);
+            kirimData();
         });
 
 

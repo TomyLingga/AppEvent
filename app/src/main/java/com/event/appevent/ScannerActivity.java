@@ -3,6 +3,7 @@ package com.event.appevent;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -52,33 +53,31 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
     @Override
     public void handleResult(Result rawResult) {
-        Log.v("TAG", rawResult.getText()); // Prints scan results
-        Log.v("TAG", rawResult.getBarcodeFormat().toString());
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("Scan Result");
-//        builder.setMessage(rawResult.getText());
-//        AlertDialog alert1 = builder.create();
-//        alert1.show();
+//        Log.v("TAG", rawResult.getText()); // Prints scan results
+//        Log.v("TAG", rawResult.getBarcodeFormat().toString());
 
         qrCode = rawResult.getText();
-        Log.i("haha","HAnDle  "+qrCode);
-
-        Intent i = new Intent(ScannerActivity.this, PendataanTamuActivity.class);
-        startActivity(i);
-        mApiInterface = ApiClient.getClient().create(ApiInterface.class);
-        hadir();
+//        Log.i("haha","HAnDle  "+qrCode);
 
         mScannerView.resumeCameraPreview(this);
+        mApiInterface = ApiClient.getClient().create(ApiInterface.class);
+        hadir();
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
     }
 
     public void hadir(){
         Call<Ticket> getHadir = mApiInterface.scanned(qrCode);
-        Log.i("haha","HADIR  "+qrCode);
+//        Log.i("haha","HADIR  "+qrCode);
         getHadir.enqueue(new Callback<Ticket>() {
             @Override
             public void onResponse(retrofit2.Call<Ticket> call, Response<Ticket> response) {
 
-                Log.i("haha","HADIR SUKSES");
+                Toast.makeText(getApplicationContext(), "SUKSES", Toast.LENGTH_LONG).show();
+
+//                Log.i("haha","HADIR SUKSES");
+
             }
 
             @Override

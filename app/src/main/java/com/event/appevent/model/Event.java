@@ -3,7 +3,9 @@ package com.event.appevent.model;
 import com.google.gson.annotations.SerializedName;
 
 public class Event {
-   // @SerializedName("event")
+    // @SerializedName("event")
+    private Integer jumlahPeserta;
+    private Boolean statusAda;
     private Integer id;
     private Integer uid;
     private String namaEvent;
@@ -17,9 +19,12 @@ public class Event {
     private String created_at;
     private String updated_at;
 
-    public Event(){}
+    public Event() {
+    }
 
-    public Event(Integer id, Integer uid, String namaEvent, String tanggalEvent, String jamEvent, Integer jumlahPesertaEvent, String lokasiEvent, String brosurEvent, String deskripsiEvent, String qrEvent, String created_at, String updated_at) {
+    public Event(Integer jumlahPeserta, Boolean statusAda, Integer id, Integer uid, String namaEvent, String tanggalEvent, String jamEvent, Integer jumlahPesertaEvent, String lokasiEvent, String brosurEvent, String deskripsiEvent, String qrEvent, String created_at, String updated_at) {
+        this.jumlahPeserta = jumlahPeserta;
+        this.statusAda = statusAda;
         this.id = id;
         this.uid = uid;
         this.namaEvent = namaEvent;
@@ -34,12 +39,36 @@ public class Event {
         this.updated_at = updated_at;
     }
 
+    public Integer getJumlahPeserta() {
+        return jumlahPeserta;
+    }
+
+    public void setJumlahPeserta(Integer jumlahPeserta) {
+        this.jumlahPeserta = jumlahPeserta;
+    }
+
+    public Boolean getStatusAda() {
+        return statusAda;
+    }
+
+    public void setStatusAda(Boolean statusAda) {
+        this.statusAda = statusAda;
+    }
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 
     public String getNamaEvent() {
@@ -96,14 +125,6 @@ public class Event {
 
     public void setDeskripsiEvent(String deskripsiEvent) {
         this.deskripsiEvent = deskripsiEvent;
-    }
-
-    public Integer getUid() {
-        return uid;
-    }
-
-    public void setUid(Integer uid) {
-        this.uid = uid;
     }
 
     public String getQrEvent() {

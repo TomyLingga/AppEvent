@@ -26,8 +26,9 @@ public interface ApiInterface {
     @GET("event")
     Call<GetEvent> getEvent();
 
-    @GET("event/{id}")
-    Call<Event> getEventById(@Path("id") Integer id);
+    @GET("event/{id}/{uid}")
+    Call<Event> getEventById(@Path("id") Integer id,
+                             @Path("uid") Integer uid);
 
     @GET("event/user/{uid}")
     Call<GetEvent> getEventByUid(@Path("uid") Integer uid);
@@ -58,14 +59,14 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("ticket/join")
     Call<Ticket> tambahTicket(
-            @Field("uid") Integer uid,
+            @Field("uidMengikuti") Integer uidMengikuti,
             @Field("eid") Integer eid
     );
 
-    @GET("ticket/{eid}/{uid}")
+    @GET("ticket/{eid}/{uidMengikuti}")
     Call<Ticket> getTicketById(
             @Path("eid") String eid,
-            @Path("uid") String uid
+            @Path("uidMengikuti") String uid
     );
 
     @GET("ticket/{eid}")
@@ -77,4 +78,15 @@ public interface ApiInterface {
     Call<Ticket> scanned(
             @Path("qrCode") String qrCode
     );
+
+    @GET("event/mengikuti/{userId}")
+    Call<GetEvent> mengikuti(
+            @Path("userId") Integer userId
+    );
+
+//    @FormUrlEncoded
+//    @GET("search")
+//    Call<GetEvent> search(
+//            @Field("cari") String cari
+//    );
 }

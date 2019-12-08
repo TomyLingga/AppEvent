@@ -6,10 +6,69 @@
     android:layout_height="match_parent"
     tools:context=".DetailEventActivity">
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        >
+
+        <Button
+            android:id="@+id/btn_join"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="Join"
+            android:textColor="#ffffff"
+            android:background="@drawable/round_button"
+            android:layout_below="@+id/img_poster_detail"
+            android:visibility="visible"
+            android:layout_gravity="center"
+            />
+
+        <Button
+            android:id="@+id/btn_daftar_peserta"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="Daftar Peserta"
+            android:textColor="#ffffff"
+            android:background="@drawable/round_button"
+            android:layout_below="@+id/img_poster_detail"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/btn_lihat_tiket"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="Lihat Tiket"
+            android:textColor="#ffffff"
+            android:background="@drawable/round_button"
+            android:layout_below="@+id/img_poster_detail"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible"
+            android:layout_gravity="center"/>
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    <View
+        android:id="@+id/shadow_up"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/shadow_up"
+        android:layout_above="@id/nav_bottom"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollview_detail">
+        android:id="@+id/scrollview_detail"
+        android:layout_above="@+id/shadow_up">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -18,107 +77,113 @@
             <ImageView
                 android:id="@+id/img_poster_detail"
                 android:layout_width="match_parent"
-                android:layout_height="450dp"
+                android:layout_height="350dp"
                 android:scaleType="centerCrop"
                 android:layout_margin="20dp"
                 android:background="@drawable/ic_launcher_background" />
-            <Button
-                android:id="@+id/btn_join"
-                android:layout_width="150dp"
-                android:layout_height="35dp"
-                android:text="JOIN"
-                android:textColor="#ffffff"
-                android:background="@drawable/round_button"
-                android:layout_below="@+id/img_poster_detail"
-                android:layout_centerHorizontal="true"
-                android:visibility="visible"/>
-
-            <Button
-                android:id="@+id/btn_daftar_peserta"
-                android:layout_width="180dp"
-                android:layout_height="35dp"
-                android:text="Daftar Peserta"
-                android:textColor="#ffffff"
-                android:background="@drawable/round_button"
-                android:layout_below="@+id/img_poster_detail"
-                android:layout_centerHorizontal="true"
-                android:visibility="invisible"/>
 
             <TextView
                 android:id="@+id/tv_nama_event_detail"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
-                android:layout_below="@+id/btn_join"
                 android:text="Nama Event"
                 android:textColor="@color/colorBlack"
-                android:textSize="16sp"
-                android:layout_gravity="center"/>
+                android:textSize="20sp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/img_poster_detail"/>
 
-            <TextView
-                android:id="@+id/tv_lokasi_event_detail"
+            <LinearLayout
+                android:id="@+id/lay_maps"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
                 android:layout_below="@+id/tv_nama_event_detail"
-                android:text="Lokasi Event"
-                android:textColor="@color/colorBlack"
-                android:textSize="16sp"
-                android:layout_gravity="center"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
-            <RelativeLayout
-                android:id="@+id/lay_waktu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_lokasi_event_detail"
-                android:layout_marginTop="3dp"
-                android:layout_marginStart="20dp"
-                >
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/ic_map"/>
 
                 <TextView
-                    android:id="@+id/tv_tanggal_event_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Tanggal"
-                    android:textSize="16sp"
-                    android:textColor="@color/colorBlack" />
-
-                <TextView
-                    android:id="@+id/koma"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text=","
-                    android:textSize="16sp"
+                    android:id="@+id/tv_lokasi_event_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Lokasi Event"
                     android:textColor="@color/colorBlack"
-                    android:layout_marginStart="85dp"/>
-                <TextView
-                    android:id="@+id/tv_jam_event_detail"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lay_calendar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="100dp"
-                    android:text="Waktu Event"
-                    android:textSize="16sp"
-                    android:textColor="@color/colorBlack"
-                    />
-            </RelativeLayout>
+                    android:orientation="horizontal"
+                    android:layout_below="@id/lay_maps"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="20dp"
+                        android:background="@drawable/ic_calendar"/>
+
+                    <TextView
+                        android:id="@+id/tv_tanggal_event_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tanggal"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorBlack"
+                        android:layout_marginStart="10dp"/>
+
+                    <TextView
+                        android:id="@+id/koma"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=","
+                        android:textSize="18sp"
+                        android:textColor="@color/colorBlack"
+                        android:layout_marginStart="5dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_jam_event_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Waktu Event"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorBlack"
+                        android:layout_marginStart="5dp"/>
+                </LinearLayout>
+
 
             <TextView
                 android:id="@+id/tv_deskripsi_event_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/lay_waktu"
-                android:text="Deskripsi Event"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/lay_calendar"
+                android:text="Detail"
                 android:textColor="@color/colorBlack"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:layout_marginBottom="10dp"/>
 
         </RelativeLayout>
 
     </ScrollView>
+
+
 
 
 </RelativeLayout>

@@ -7,6 +7,7 @@ public class DataTamu {
     Integer eid;
     Integer uid;
     String qrCode;
+    Integer kehadiran;
     String created_at;
     String updated_at;
     String name;
@@ -44,6 +45,14 @@ public class DataTamu {
 
     public void setQrCode(String qrCode) {
         this.qrCode = qrCode;
+    }
+
+    public Integer getKehadiran() {
+        return kehadiran;
+    }
+
+    public void setKehadiran(Integer kehadiran) {
+        this.kehadiran = kehadiran;
     }
 
     public String getCreated_at() {

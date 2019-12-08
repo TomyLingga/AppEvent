@@ -2,7 +2,7 @@ package com.event.appevent.model;
 
 public class Ticket {
     private Integer id;
-    private Integer uid;
+    private Integer uidMengikuti;
     private Integer eid;
     private String qrCode;
     private Integer kehadiran;
@@ -16,11 +16,11 @@ public class Ticket {
     }
 
     public Integer getUid() {
-        return uid;
+        return uidMengikuti;
     }
 
     public void setUid(Integer uid) {
-        this.uid = uid;
+        this.uidMengikuti = uid;
     }
 
     public Integer getEid() {

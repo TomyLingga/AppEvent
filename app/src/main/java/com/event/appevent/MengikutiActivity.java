@@ -2,43 +2,78 @@ package com.event.appevent;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.event.appevent.adapter.EventAdapter;
 import com.event.appevent.model.Event;
+import com.event.appevent.model.GetEvent;
+import com.event.appevent.model.User;
+import com.event.appevent.network.ApiClient;
+import com.event.appevent.network.ApiInterface;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MengikutiActivity extends AppCompatActivity {
 
     RecyclerView rec_list_mengikuti_event;
     EventAdapter eventAdapter;
     List<Event> eventList;
+    ApiInterface mApiInterface;
+    User user;
+    SharedPrefManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mengikuti);
 
-        rec_list_mengikuti_event = (RecyclerView) this.findViewById(R.id.rec_mengikuti_event);
+        session = new SharedPrefManager(getApplicationContext());
 
-//        eventList = new ArrayList<>();
-//        eventList.add(new Event("Seminar A", R.drawable.gambar));
-//        eventList.add(new Event("Seminar b", R.drawable.gambar));
-//        eventList.add(new Event("Seminar c", R.drawable.ic_launcher_background));
-//        eventList.add(new Event("Seminar d", R.drawable.ic_launcher_background));
-//        eventList.add(new Event("Seminar E", R.drawable.ic_launcher_background));
+        if (session.isLoggedIn()) {
+            user = session.getUserDetails();
+            Log.i("dataUser2", ""+user.toString());
+            Log.i("dataUser2", ""+user.getId());
 
+        }
+
+        rec_list_mengikuti_event = this.findViewById(R.id.rec_mengikuti_event);
         rec_list_mengikuti_event.setLayoutManager(new GridLayoutManager(this, 2));
         rec_list_mengikuti_event.setHasFixedSize(true);
 
-//        EventAdapter.RecyclerViewClickListener listener = (view, position) ->    {
-//            Intent intent5 = new Intent(MengikutiActivity.this, DetailEventActivity.class);
-//            startActivity(intent5);
-//        };
-//        eventAdapter = new EventAdapter(this, eventList, listener);
-//        rec_list_mengikuti_event.setAdapter(eventAdapter);
+        mApiInterface = ApiClient.getClient().create(ApiInterface.class);
+        mengikuti();
+    }
 
+    public void mengikuti(){
+        Call<GetEvent> mengikutiCall = mApiInterface.mengikuti(user.getId());
+        mengikutiCall.enqueue(new Callback<GetEvent>() {
+            @Override
+            public void onResponse(Call<GetEvent> call, Response<GetEvent>
+                    response) {
+                if (response.body() != null) {
+                    eventList = response.body().getListDataEvent();
+
+                    eventAdapter = new EventAdapter(eventList);
+                    rec_list_mengikuti_event.setAdapter(eventAdapter);
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Data Event tidak ada", Toast.LENGTH_LONG).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetEvent> call, Throwable t) {
+                Log.e("Retrofit Get", t.toString());
+            }
+        });
     }
 }

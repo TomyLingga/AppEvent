@@ -2,6 +2,7 @@ package com.event.appevent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,7 +37,6 @@ public class PendataanTamuActivity extends AppCompatActivity {
     ApiInterface mApiInterface;
     Integer idEvent = 0;
     Button scan;
-    Ticket ticket;
 
 
 
@@ -45,15 +45,12 @@ public class PendataanTamuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pendataan_tamu);
 
-        rec_data_tamu = (RecyclerView) this.findViewById(R.id.rec_data_tamu);
-        scan = (Button) this.findViewById(R.id.btn_scan);
+        rec_data_tamu = this.findViewById(R.id.rec_data_tamu);
+        scan = this.findViewById(R.id.btn_scan);
 
-        scan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(PendataanTamuActivity.this, ScannerActivity.class);
-                startActivity(i);
-            }
+        scan.setOnClickListener(view -> {
+            Intent i = new Intent(PendataanTamuActivity.this, ScannerActivity.class);
+            startActivityForResult(i, 1);
         });
 
         Intent intent = getIntent();
@@ -71,6 +68,16 @@ public class PendataanTamuActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                getDataPeserta();
+            }
+        }
+    }//onActivityResult
+
     public void getDataPeserta() {
         Call<ListDataTamu> tamuCall = mApiInterface.getDataPeserta(idEvent);
         tamuCall.enqueue(new Callback<ListDataTamu>() {
@@ -86,7 +93,7 @@ public class PendataanTamuActivity extends AppCompatActivity {
                     rec_data_tamu.setAdapter(dataTamuAdapter);
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Data Event tidak ada", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Data Tamu tidak ada", Toast.LENGTH_LONG).show();
 
                 }
             }

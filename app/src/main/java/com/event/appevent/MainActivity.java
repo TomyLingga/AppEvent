@@ -32,30 +32,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btn_login = (Button) this.findViewById(R.id.btn_login);
-        tv_register = (TextView) this.findViewById(R.id.tv_register);
-        email = (EditText) this.findViewById(R.id.edit_email);
-        password = (EditText) this.findViewById(R.id.edit_password);
+        btn_login = this.findViewById(R.id.btn_login);
+        tv_register = this.findViewById(R.id.tv_register);
+        email = this.findViewById(R.id.edit_email);
+        password = this.findViewById(R.id.edit_password);
 
         // Session Manager
         session = new SharedPrefManager(getApplicationContext());
 
-        btn_login.setOnClickListener(new View.OnClickListener(){
+        btn_login.setOnClickListener(v -> login());
 
 
-            @Override
-            public void onClick(View v) {
-                login();
-            }
-        });
-
-
-        tv_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent2 = new Intent(MainActivity.this, DaftarActivity.class);
-                startActivity(intent2);
-            }
+        tv_register.setOnClickListener(v -> {
+            Intent intent2 = new Intent(MainActivity.this, DaftarActivity.class);
+            startActivity(intent2);
         });
 
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);

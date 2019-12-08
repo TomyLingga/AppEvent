@@ -21,9 +21,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nama Event"
-                android:inputType="text"
+                android:inputType="textCapSentences"
                 android:layout_centerHorizontal="true"
-                android:layout_marginStart="120dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="50dp"/>
 
             <EditText
@@ -35,7 +35,7 @@
                 android:focusableInTouchMode="false"
                 android:layout_below="@+id/edit_nama_event"
                 android:layout_centerHorizontal="true"
-                android:layout_marginStart="120dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="10dp" />
 
             <EditText
@@ -47,7 +47,7 @@
                 android:focusableInTouchMode="false"
                 android:layout_below="@+id/edit_tanggal_event"
                 android:layout_centerHorizontal="true"
-                android:layout_marginStart="120dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="10dp" />
 
             <EditText
@@ -57,7 +57,7 @@
                 android:hint="Jumlah Peserta Event"
                 android:inputType="number"
                 android:layout_below="@id/edit_waktu_event"
-                android:layout_marginStart="120dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="10dp"
                 android:layout_centerHorizontal="true"/>
 
@@ -66,9 +66,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Lokasi Event"
-                android:inputType="text"
+                android:inputType="textCapSentences"
                 android:layout_below="@id/edit_max_peserta"
-                android:layout_marginStart="120dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="10dp"
                 android:layout_centerHorizontal="true"/>
 
@@ -78,7 +78,7 @@
                 android:id="@+id/lay_upload_brosur"
                 android:layout_below="@+id/edit_lokasi_event"
                 android:layout_centerHorizontal="true"
-                android:layout_marginStart="120dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="10dp">
 
                 <TextView
@@ -88,7 +88,8 @@
                     android:text="Brosur Event"
                     android:textSize="18sp"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="3dp"/>
+                    android:layout_marginStart="3dp"
+                    android:layout_marginEnd="45dp"/>
 
                 <Button
                     android:id="@+id/btn_upload_brosur"
@@ -107,7 +108,7 @@
                 android:hint="Deskripsi Event"
                 android:inputType="textMultiLine"
                 android:layout_centerHorizontal="true"
-                android:layout_marginStart="120dp"
+                android:layout_marginStart="50dp"
                 android:layout_below="@id/lay_upload_brosur"/>
 
             <ImageView
@@ -125,9 +126,11 @@
                 android:layout_height="40dp"
                 android:layout_below="@+id/ivAttachment"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
                 android:text="Tambah Event"
-                android:background="@color/colorPrimaryDark" />
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/round_button" />
 
 
 

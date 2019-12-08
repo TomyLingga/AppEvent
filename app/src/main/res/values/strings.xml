@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">AppEvent</string>
+    <string name="title_activity_maps2">Map</string>
+
+    <string-array name="query_suggestions">
+        <item>Android</item>
+        <item>iOS</item>
+        <item>SCALA</item>
+        <item>Ruby</item>
+        <item>JavaScript</item>
+    </string-array>
 </resources>
