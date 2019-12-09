@@ -77,8 +77,8 @@
             <ImageView
                 android:id="@+id/img_poster_detail"
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:scaleType="centerCrop"
+                android:layout_height="450dp"
+                android:scaleType="centerInside"
                 android:layout_margin="20dp"
                 android:background="@drawable/ic_launcher_background" />
 

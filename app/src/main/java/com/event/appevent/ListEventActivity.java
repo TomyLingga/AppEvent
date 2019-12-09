@@ -2,6 +2,8 @@ package com.event.appevent;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.ferfalk.simplesearchview.SimpleSearchView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -21,8 +23,11 @@ import com.event.appevent.model.Event;
 import com.event.appevent.model.GetEvent;
 import com.event.appevent.network.ApiClient;
 import com.event.appevent.network.ApiInterface;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,7 +41,8 @@ public class ListEventActivity extends AppCompatActivity {
     List<Event> eventList;
     ApiInterface mApiInterface;
     SharedPrefManager session;
-    MaterialSearchView searchView;
+    SimpleSearchView searchView;
+    Boolean isSearch = false;
 
 
     @Override
@@ -68,14 +74,12 @@ public class ListEventActivity extends AppCompatActivity {
 
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         refresh();
+        searchView = findViewById(R.id.searchView);
 
-        searchView = (MaterialSearchView) findViewById(R.id.search_view);
-
-        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
-
+        searchView.setOnQueryTextListener(new SimpleSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String cari) {
-                Toast.makeText(getBaseContext(), cari, Toast.LENGTH_LONG).show();
+                isSearch = true;
                 Call<GetEvent> eventCall = mApiInterface.search(cari);
                 eventCall.enqueue(new Callback<GetEvent>() {
                     @Override
@@ -83,7 +87,7 @@ public class ListEventActivity extends AppCompatActivity {
                         if (response.body() != null) {
                             eventList = response.body().getListDataEvent();
 
-                            eventAdapter = new EventAdapter(eventList);
+                            eventAdapter = new EventAdapter(eventList, ListEventActivity.this, session.getUserDetails().getId(), session.getUserDetails().getName());
                             rec_list_event.setAdapter(eventAdapter);
 
                         } else {
@@ -104,8 +108,13 @@ public class ListEventActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(getBaseContext(), newText, Toast.LENGTH_LONG).show();
-                Log.i("haha","newText"+newText);
+                Log.d("SimpleSearchView", "Text changed:" + newText);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextCleared() {
+                Log.d("SimpleSearchView", "Text cleared");
                 return false;
             }
         });
@@ -122,8 +131,10 @@ public class ListEventActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (searchView.isSearchOpen()) {
+        if(searchView.isSearchOpen() || isSearch) {
             searchView.closeSearch();
+            isSearch = false;
+            refresh();
         } else {
             super.onBackPressed();
         }
@@ -155,9 +166,21 @@ public class ListEventActivity extends AppCompatActivity {
                     response) {
                 if (response.body() != null) {
                     eventList = response.body().getListDataEvent();
+                    Date currentTime = Calendar.getInstance().getTime();
+                    SimpleDateFormat df = new SimpleDateFormat("dd MMMM yyyy");
+                    String formattedDate = df.format(currentTime);
+                    List<Event> daftarEvent = new ArrayList<>();
+                    for(Event event : eventList){
+                        String strTime = event.getTanggalEvent();
+                        if(formattedDate.compareTo(strTime) < 0 ){
+                            daftarEvent.add(event);
 
-                    eventAdapter = new EventAdapter(eventList);
-                    rec_list_event.setAdapter(eventAdapter);
+                            eventAdapter = new EventAdapter(daftarEvent, ListEventActivity.this, session.getUserDetails().getId(), session.getUserDetails().getName());
+                            rec_list_event.setAdapter(eventAdapter);
+                        } else {
+                            Log.i("waktu sekarang", "Waktu salah");
+                        }
+                    }
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Data Event tidak ada", Toast.LENGTH_LONG).show();

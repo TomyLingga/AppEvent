@@ -1,5 +1,6 @@
 package com.event.appevent;
 
+import android.app.Activity;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -51,6 +52,16 @@ public class MainActivity extends AppCompatActivity {
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                login();
+            }
+        }
+    }
+
     public void login() {
         Call<User> loginCall = mApiInterface.login(email.getText().toString(), password.getText().toString());
         loginCall.enqueue(new Callback<User>() {
@@ -65,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("dataUser", ""+user.getName());
                     session.createLoginSession(user);
                     session.getUserDetails();
+                    Toast.makeText(getApplicationContext(), "Selamat Datang "+user.getName(), Toast.LENGTH_LONG).show();
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Data kosong", Toast.LENGTH_LONG).show();

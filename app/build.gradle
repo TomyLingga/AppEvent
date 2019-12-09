@@ -58,6 +58,7 @@ dependencies {
     //Mapbox lib
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:8.5.0'
     //Search
-    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+   // implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+    implementation 'com.github.Ferfalk:SimpleSearchView:0.1.4'
 
 }

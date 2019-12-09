@@ -6,42 +6,59 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ListEventActivity"
     android:orientation="vertical"
-    android:background="@drawable/round_button">
+    android:background="@drawable/gradients">
+
+    <!--<androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+            <TextView
+                android:id="@+id/list_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="List Event"
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"/>
+
+            <com.miguelcatalan.materialsearchview.MaterialSearchView
+                android:id="@+id/search_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/MaterialSearchViewStyle"/>
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>-->
+
+
+    <FrameLayout
+        android:id="@+id/toolbar_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary">
+            app:title="List Event" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
-                <TextView
-                    android:id="@+id/list_event"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="List Event"
-                    android:textSize="18sp"
-                    android:textColor="@color/colorWhite"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="10dp"/>
-
-                <com.miguelcatalan.materialsearchview.MaterialSearchView
-                    android:id="@+id/search_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </RelativeLayout>
-        </androidx.appcompat.widget.Toolbar>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@drawable/shadow_down"/>
+        <com.ferfalk.simplesearchview.SimpleSearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            app:type="card"
+            tools:visibility="visible" />
+    </FrameLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

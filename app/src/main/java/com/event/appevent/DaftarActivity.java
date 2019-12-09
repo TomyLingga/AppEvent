@@ -1,5 +1,6 @@
 package com.event.appevent;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,9 +46,11 @@ public class DaftarActivity extends AppCompatActivity {
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
 
         btnDaftar.setOnClickListener(v -> {
-            Intent intent3 = new Intent(DaftarActivity.this, MainActivity.class);
-            startActivity(intent3);
+
             kirimData();
+            Intent returnIntent = new Intent();
+            setResult(Activity.RESULT_OK, returnIntent);
+            finish();
         });
 
 

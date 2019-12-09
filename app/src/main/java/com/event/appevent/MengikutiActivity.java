@@ -61,7 +61,7 @@ public class MengikutiActivity extends AppCompatActivity {
                 if (response.body() != null) {
                     eventList = response.body().getListDataEvent();
 
-                    eventAdapter = new EventAdapter(eventList);
+                    eventAdapter = new EventAdapter(eventList, MengikutiActivity.this, session.getUserDetails().getId(), session.getUserDetails().getName());
                     rec_list_mengikuti_event.setAdapter(eventAdapter);
 
                 } else {
