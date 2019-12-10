@@ -43,9 +43,32 @@
         <activity
             android:name=".MapsActivity2"
             android:label="@string/title_activity_maps2"></activity>
-        <activity android:name=".ScannerActivity" />
-        <activity android:name=".MengikutiActivity" />
-        <activity android:name=".MyEventActivity" />
+
+
+        <activity android:name=".ScannerActivity"
+            android:label="Scanner"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PendataanTamuActivity" />
+        </activity>
+
+        <activity android:name=".MengikutiActivity"
+            android:label="Mengikuti"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ListEventActivity" />
+        </activity>
+
+        <activity android:name=".MyEventActivity"
+            android:label="My Event"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ListEventActivity" />
+        </activity>
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,7 +80,11 @@
         <activity
             android:name=".PendataanTamuActivity"
             android:label="Daftar Peserta"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".DetailEventActivity" />
+        </activity>
         <activity
             android:name=".ListEventActivity"
             android:label="ListEvent"

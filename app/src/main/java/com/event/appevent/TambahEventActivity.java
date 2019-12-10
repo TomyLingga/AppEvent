@@ -1,5 +1,6 @@
 package com.event.appevent;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -220,9 +221,9 @@ public class TambahEventActivity extends AppCompatActivity {
                     response) {
 
                 if (response.isSuccessful()) {
-                    Log.i("Success", new Gson().toJson(response.body()));
-                    Intent intent3 = new Intent(TambahEventActivity.this, ListEventActivity.class);
-                    startActivity(intent3);
+                    Intent returnIntent = new Intent();
+                    setResult(Activity.RESULT_OK, returnIntent);
+                    finish();
                 } else{
                     Log.i("unSuccess", new Gson().toJson(response.errorBody()));
                 }

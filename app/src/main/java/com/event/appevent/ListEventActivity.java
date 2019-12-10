@@ -1,5 +1,6 @@
 package com.event.appevent;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -65,7 +66,7 @@ public class ListEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent4 = new Intent(ListEventActivity.this, TambahEventActivity.class);
-                startActivity(intent4);
+                startActivityForResult(intent4, 1);
             }
         });
 
@@ -127,6 +128,16 @@ public class ListEventActivity extends AppCompatActivity {
         searchView.setMenuItem(item);
 
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                refresh();
+            }
+        }
     }
 
     @Override
