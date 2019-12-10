@@ -22,6 +22,7 @@ import com.event.appevent.network.ApiClient;
 import com.event.appevent.network.ApiInterface;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -147,6 +148,7 @@ public class DetailEventActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Event> call, Response<Event>
                     response) {
+
                 if (response.body() != null) {
                     event = response.body();
 
@@ -154,7 +156,18 @@ public class DetailEventActivity extends AppCompatActivity {
                     detailNamaEvent.setText(event.getNamaEvent());
                     detailLokasiEvent.setText(event.getLokasiEvent());
                     detailJamEvent.setText(event.getJamEvent());
-                    detailTanggalEvent.setText(event.getTanggalEvent());
+
+                    String myStrDate = event.getTanggalEvent();
+                    SimpleDateFormat formatInput = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat formatOutput = new SimpleDateFormat("dd MMMM yyyy");
+                    try {
+                        Date date = formatInput.parse(myStrDate);
+                        String datetime = formatOutput.format(date);
+                        detailTanggalEvent.setText(datetime);
+                    } catch (ParseException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                     detailDeskripsiEvent.setText(event.getDeskripsiEvent());
                     Picasso.get().load(event.getBrosurEvent())
                             .fit()
@@ -169,7 +182,7 @@ public class DetailEventActivity extends AppCompatActivity {
                         btn_lihat_tiket.setVisibility(View.GONE);
                         btn_daftar_peserta.setVisibility(View.VISIBLE);
                     } else {
-                        SimpleDateFormat df = new SimpleDateFormat("dd MMMM yyyy");
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                         SimpleDateFormat tf = new SimpleDateFormat("HH:mm");
                         String formattedDate = df.format(currentTime);
                         String formattedTime = tf.format(currentTime);

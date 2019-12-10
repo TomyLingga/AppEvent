@@ -166,21 +166,8 @@ public class ListEventActivity extends AppCompatActivity {
                     response) {
                 if (response.body() != null) {
                     eventList = response.body().getListDataEvent();
-                    Date currentTime = Calendar.getInstance().getTime();
-                    SimpleDateFormat df = new SimpleDateFormat("dd MMMM yyyy");
-                    String formattedDate = df.format(currentTime);
-                    List<Event> daftarEvent = new ArrayList<>();
-                    for(Event event : eventList){
-                        String strTime = event.getTanggalEvent();
-                        if(formattedDate.compareTo(strTime) < 0 ){
-                            daftarEvent.add(event);
-
-                            eventAdapter = new EventAdapter(daftarEvent, ListEventActivity.this, session.getUserDetails().getId(), session.getUserDetails().getName());
-                            rec_list_event.setAdapter(eventAdapter);
-                        } else {
-                            Log.i("waktu sekarang", "Waktu salah");
-                        }
-                    }
+                    eventAdapter = new EventAdapter(eventList, ListEventActivity.this, session.getUserDetails().getId(), session.getUserDetails().getName());
+                    rec_list_event.setAdapter(eventAdapter);
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Data Event tidak ada", Toast.LENGTH_LONG).show();

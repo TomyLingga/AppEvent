@@ -97,7 +97,7 @@ public class TambahEventActivity extends AppCompatActivity {
         };
 
         jamTambahEvent.setOnClickListener(view -> {
-            myCalendar = Calendar.getInstance();
+            //myCalendar = Calendar.getInstance();
             currentHour = myCalendar.get(Calendar.HOUR_OF_DAY);
             currentMinute = myCalendar.get(Calendar.MINUTE);
 
@@ -189,7 +189,11 @@ public class TambahEventActivity extends AppCompatActivity {
 
     private void tambahEventBaru() {
         String namaEventRequest = namaTambahEvent.getText().toString().trim();
-        String tanggalEventRequest = tanggalTambahEvent.getText().toString().trim();
+
+        String myFormat = "yyyy-MM-dd";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        String tanggalEventRequest = sdf.format(myCalendar.getTime()).trim();
+
         String jamEventRequest = jamTambahEvent.getText().toString().trim();
         String jumlahPesertaEventRequest = jumlahPesertaTambahEvent.getText().toString().trim();
         String lokasiEventRequest = lokasiTambahEvent.getText().toString().trim();
