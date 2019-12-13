@@ -33,25 +33,32 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btn_login = this.findViewById(R.id.btn_login);
-        tv_register = this.findViewById(R.id.tv_register);
-        email = this.findViewById(R.id.edit_email);
-        password = this.findViewById(R.id.edit_password);
+        // set value xml
+        btn_login = this.findViewById(R.id.btn_login);      //tombol login
+        tv_register = this.findViewById(R.id.tv_register);  //text view register
+        email = this.findViewById(R.id.edit_email);         //edit text untuk mengisi email
+        password = this.findViewById(R.id.edit_password);   //edit text untuk mengisi password
 
         // Session Manager
         session = new SharedPrefManager(getApplicationContext());
 
-        btn_login.setOnClickListener(v -> login());
+        // onclick tombol login panggil function login()
+        btn_login.setOnClickListener(view ->
+            login()
+        );
 
-
+        //onclick text view register, masuk ke halaman register
         tv_register.setOnClickListener(v -> {
             Intent intent2 = new Intent(MainActivity.this, DaftarActivity.class);
             startActivity(intent2);
         });
 
+        //api interface
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
     }
 
+        //untuk merefresh halaman, jika resultnya sama dengan result di activity sebelumnya
+        //panggil function login() lagi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -62,23 +69,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+        //function login()
     public void login() {
+        //panggil api interface login, kasih parameter email dan password yang diberikan pada edit text
         Call<User> loginCall = mApiInterface.login(email.getText().toString(), password.getText().toString());
-        loginCall.enqueue(new Callback<User>() {
+        loginCall.enqueue(new Callback<User>() { //panggil backend
 
             @Override
             public void onResponse(Call<User> call, Response<User>
                     response) {
-                if(response.body() != null) {
+                if(response.body() != null) {       //kalau responnya gak kosong
                     User user = response.body();
 
-                    Log.i("dataUser", ""+response.body().getId());
-                    Log.i("dataUser", ""+user.getName());
                     session.createLoginSession(user);
                     session.getUserDetails();
                     Toast.makeText(getApplicationContext(), "Selamat Datang "+user.getName(), Toast.LENGTH_LONG).show();
+                    finish();
 
-                } else {
+                } else {                            //kalau responnya kosong
                     Toast.makeText(getApplicationContext(), "Data kosong", Toast.LENGTH_LONG).show();
 
                 }

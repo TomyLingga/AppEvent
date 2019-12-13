@@ -1,6 +1,6 @@
 package com.event.appevent.model;
 
-public class User {
+public class User {  //MODEL User
     private Integer id;
     private String name;
     private String email;

@@ -19,7 +19,7 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface ApiInterface {
-    @GET("login/{email}/{password}")
+    @GET("login/{email}/{password}") //Route untuk login
     Call<User>login(@Path("email") String email,
                     @Path("password") String password);
 
@@ -34,7 +34,7 @@ public interface ApiInterface {
     Call<GetEvent> getEventByUid(@Path("uid") Integer uid);
 
     @FormUrlEncoded
-    @POST("register")
+    @POST("register") //Route untuk daftar
     Call<User> register(
             @Field("name") String name,
             @Field("email") String email,

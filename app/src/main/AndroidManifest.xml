@@ -54,16 +54,14 @@
         </activity>
 
         <activity android:name=".MengikutiActivity"
-            android:label="Mengikuti"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="Mengikuti">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ListEventActivity" />
         </activity>
 
         <activity android:name=".MyEventActivity"
-            android:label="My Event"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="My Event">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ListEventActivity" />

@@ -155,6 +155,8 @@ public class TambahEventActivity extends AppCompatActivity {
                 imageView.setImageBitmap(bm);
                 File file = new File(imagePosterPath);
                 inputNamaBrosurTambahEvent.setText(file.getName());
+            }else{
+                Toast.makeText(getApplicationContext(), "Tolong upload brosur Event anda", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -225,14 +227,14 @@ public class TambahEventActivity extends AppCompatActivity {
                     setResult(Activity.RESULT_OK, returnIntent);
                     finish();
                 } else{
-                    Log.i("unSuccess", new Gson().toJson(response.errorBody()));
+                    Toast.makeText(getApplicationContext(), "unsukses", Toast.LENGTH_LONG).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<ResponseEvent> call, Throwable t) {
-                Log.i("gagal", t.toString(), t);
+                Toast.makeText(getApplicationContext(), "gagal", Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -1,6 +1,7 @@
 package com.event.appevent;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -13,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -44,6 +46,8 @@ public class ListEventActivity extends AppCompatActivity {
     SharedPrefManager session;
     SimpleSearchView searchView;
     Boolean isSearch = false;
+    AlertDialog.Builder dialog;
+    LayoutInflater inflater;
 
 
     @Override
@@ -147,7 +151,22 @@ public class ListEventActivity extends AppCompatActivity {
             isSearch = false;
             refresh();
         } else {
-            super.onBackPressed();
+//            super.onBackPressed();
+            dialog = new AlertDialog.Builder(ListEventActivity.this);
+            inflater = getLayoutInflater();
+            dialog.setCancelable(true);
+
+            dialog.setTitle("Perhatian");
+            dialog.setMessage("Apakah anda yakin ingin keluar ?");
+
+            dialog.setPositiveButton("Ya", (dialog, which) -> {
+                ListEventActivity.super.onBackPressed();
+                dialog.dismiss();
+            });
+
+            dialog.setNegativeButton("Tidak", (dialog, which) -> dialog.dismiss());
+
+            dialog.show();
         }
     }
 

@@ -37,43 +37,60 @@ public class DaftarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daftar);
 
-        btnDaftar = this.findViewById(R.id.btn_register);
-        daftarUsername = this.findViewById(R.id.edit_username_daftar);
-        daftarPassword = this.findViewById(R.id.edit_password_daftar);
-        daftarPassword2 = this.findViewById(R.id.edit_password_daftar2);
-        daftarEmail = this.findViewById(R.id.edit_email_daftar);
+        // set value xml
+        btnDaftar = this.findViewById(R.id.btn_register);                   //tombol daftar
+        daftarUsername = this.findViewById(R.id.edit_username_daftar);      //edit text untuk mengisi nama
+        daftarPassword = this.findViewById(R.id.edit_password_daftar);      //edit text untuk mengisi password
+        daftarPassword2 = this.findViewById(R.id.edit_password_daftar2);    //edit text untuk mengisi confirm password
+        daftarEmail = this.findViewById(R.id.edit_email_daftar);            //edit text untuk mengisi email
 
+        //api interface
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
 
+        //onclick tombol daftar
         btnDaftar.setOnClickListener(v -> {
 
+            // panggil funtion kirimData()
             kirimData();
-            Intent returnIntent = new Intent();
-            setResult(Activity.RESULT_OK, returnIntent);
-            finish();
+
+
         });
 
 
     }
 
     private void kirimData(){
+        // data2 yang sudah diisi tampung ke variable baru
         String namaUser = daftarUsername.getText().toString().trim();
         Log.i("nama User", "nama = "+namaUser);
         String passwordUser = daftarPassword.getText().toString().trim();
         String password2User = daftarPassword2.getText().toString().trim();
         String emailUser = daftarEmail.getText().toString().trim();
 
+        //panggil api interface register, simpan data2 variable diatas
         Call<User> eventCall = mApiInterface.register(namaUser, emailUser, passwordUser, password2User);
-        eventCall.enqueue(new Callback<User>() {
+        eventCall.enqueue(new Callback<User>() {    //panggil backend
             @Override
             public void onResponse(Call<User> call, Response<User>
                     response) {
-                        Toast.makeText(getApplicationContext(),"berhasil", Toast.LENGTH_LONG).show();
+
+                if (response.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(),"Register Berhasil", Toast.LENGTH_LONG).show();
+
+                    Intent returnIntent = new Intent();            // Balik ke activity sebelumnya (login)
+                    setResult(Activity.RESULT_OK, returnIntent);
+
+                    //supaya kalau di tekan back tidak balik ke activity ini lagi tambah kan method finish()
+                    finish();
+                } else{
+                    Toast.makeText(getApplicationContext(), "Periksa kembali Email atau Password anda", Toast.LENGTH_LONG).show();
+                }
+
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Log.e("Retrofit Get", t.toString());
+                Toast.makeText(getApplicationContext(), "onFailure", Toast.LENGTH_LONG).show();
             }
         });
     }
