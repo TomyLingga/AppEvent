@@ -23,12 +23,10 @@ import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder> {
 
-
     private List<Event> eventList;
     Context context;
     Integer uId = 0;
     String uNama;
-
 
     public EventAdapter(List<Event> eventList, Activity context, Integer uId, String uNama) {
         this.eventList = eventList;
@@ -36,7 +34,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         this.uId = uId;
         this.uNama = uNama;
     }
-
 
     @NonNull
     @Override
@@ -50,13 +47,16 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
         Event event = eventList.get(i);
 
-        eventViewHolder.eventtitle.setText(event.getNamaEvent());
+        eventViewHolder.eventtitle.setText(event.getNamaEvent());  // set nama Event
+
+        // set poster Event
         Picasso.get().load(event.getBrosurEvent())
                 .resize(800, 1000)
                 .onlyScaleDown()
                 .centerCrop()
                 .into(eventViewHolder.eventpicture);
 
+        // pengecekan apakah user yang login = user yang punya event diberi penanda
         if(event.getUid().equals(uId)) {
             eventViewHolder.eventauthor.setVisibility(View.VISIBLE);
         }
@@ -64,12 +64,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         eventViewHolder.itemView.setOnClickListener(view -> {
             Intent mIntent = new Intent(view.getContext(), DetailEventActivity.class);
             mIntent.putExtra("idEvent", eventList.get(i).getId());
-            Log.i("idPutEvent", "id : "+eventList.get(i).getId());
             mIntent.putExtra("Nama", eventList.get(i).getNamaEvent());
             mIntent.putExtra("Uid", eventList.get(i).getUid());
             view.getContext().startActivity(mIntent);
         });
-
 
     }
 
@@ -92,7 +90,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             eventauthor = itemView.findViewById(R.id.img_authority);
 
         }
-
     }
 
 }

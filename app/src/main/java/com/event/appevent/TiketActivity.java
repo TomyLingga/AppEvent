@@ -32,6 +32,8 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -42,16 +44,12 @@ public class TiketActivity extends AppCompatActivity {
     ImageView qr;
     Button simpan;
 
-    Integer idTicket = 0;
     String idEvent, idUser, namaEvent2, lokasiEvent2, tanggalEvent, jamEvent;
     String hash;
 
     User user;
-    Bitmap bitmap ;
     Ticket ticket;
     Event event;
-
-    public final static int QRcodeWidth = 500 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,16 +72,24 @@ public class TiketActivity extends AppCompatActivity {
         tanggalEvent= extras.getString("EXTRA_tanggalEvent");
         jamEvent= extras.getString("EXTRA_jamEvent");
 
-        Log.i("winri", "id - " + idTicket+" uid: "+idUser+" eid: "+idEvent);
-
         namaEvent.setText(namaEvent2);
         lokasiEvent.setText(lokasiEvent2);
-        waktuEvent.setText(tanggalEvent+" "+jamEvent);
+        String myStrDate = tanggalEvent;
+        SimpleDateFormat formatInput = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatOutput = new SimpleDateFormat("dd MMMM yyyy");
+        try {
+            Date date = formatInput.parse(myStrDate);
+            String datetime = formatOutput.format(date);
+            waktuEvent.setText(datetime+" "+jamEvent);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         simpan.setOnClickListener(view -> {
             simpan.setVisibility(View.GONE);
             takeScreenshot();
-            Toast.makeText(getApplicationContext(), "Tiket Sudah Tersimpan", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Tiket Sudah Tersimpan di Galeri", Toast.LENGTH_LONG).show();
             simpan.setVisibility(View.VISIBLE);
         });
 
@@ -91,32 +97,25 @@ public class TiketActivity extends AppCompatActivity {
 
         if (session.isLoggedIn()) {
             user = session.getUserDetails();
-            Log.i("winri", ""+user.getId());
         }
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
 
         getQrHash();
-        Log.i("winri", "ini try catch "+hash);
 
     }
 
     public void getQrHash(){
-        Log.i("winri", "start qr func");
-        Log.i("winri", idEvent+" "+idUser);
         Call<Ticket> getTicket = mApiInterface.getTicketById(idEvent, idUser);
         getTicket.enqueue(new Callback<Ticket>() {
             @Override
             public void onResponse(Call<Ticket> call, Response<Ticket> response) {
-                Log.i("winri", "start qr func3");
                 if (response.body() != null) {
                     ticket = response.body();
                     hash = ticket.getQrCode();
 
-                    Log.i("winri", "ini  "+hash);
                     MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
                     try{
                         BitMatrix bitMatrix = multiFormatWriter.encode(hash, BarcodeFormat.QR_CODE,200,200);
-                        Log.i("winri", "ini try catch "+hash);
                         BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                         Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
                         qr.setImageBitmap(bitmap);
@@ -124,8 +123,7 @@ public class TiketActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Data Event tidak ada", Toast.LENGTH_LONG).show();
-                    Log.i("winri", "hash gagal");
+                    Toast.makeText(getApplicationContext(), "Data Event Tidak Ada", Toast.LENGTH_LONG).show();
 
                 }
             }

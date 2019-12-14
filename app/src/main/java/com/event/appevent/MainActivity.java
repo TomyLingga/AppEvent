@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
     }
 
-        //untuk merefresh halaman, jika resultnya sama dengan result di activity sebelumnya
-        //panggil function login() lagi
+    //untuk merefresh halaman, jika resultnya sama dengan result di activity sebelumnya
+    //panggil function login() lagi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-        //function login()
+    //function login()
     public void login() {
         //panggil api interface login, kasih parameter email dan password yang diberikan pada edit text
         Call<User> loginCall = mApiInterface.login(email.getText().toString(), password.getText().toString());
@@ -87,18 +87,15 @@ public class MainActivity extends AppCompatActivity {
                     finish();
 
                 } else {                            //kalau responnya kosong
-                    Toast.makeText(getApplicationContext(), "Data kosong", Toast.LENGTH_LONG).show();
-
+                    Toast.makeText(getApplicationContext(), "Email atau password salah", Toast.LENGTH_LONG).show();
                 }
-
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Periksa kembali email dan password anda", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Periksa koneksi internet anda", Toast.LENGTH_LONG).show();
             }
         });
     }
-
 
 }

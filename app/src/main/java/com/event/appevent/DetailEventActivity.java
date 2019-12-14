@@ -1,17 +1,23 @@
 package com.event.appevent;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +65,7 @@ public class DetailEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_event);
 
+        //set value xml
         btn_join = this.findViewById(R.id.btn_join);
         btn_daftar_peserta = this.findViewById(R.id.btn_daftar_peserta);
         btn_lihat_tiket = this.findViewById(R.id.btn_lihat_tiket);
@@ -69,6 +76,7 @@ public class DetailEventActivity extends AppCompatActivity {
         detailTanggalEvent = this.findViewById(R.id.tv_tanggal_event_detail);
         detailDeskripsiEvent = this.findViewById(R.id.tv_deskripsi_event_detail);
 
+        //
         currentTime = Calendar.getInstance().getTime();
 
         Intent intent = getIntent();
@@ -138,8 +146,35 @@ public class DetailEventActivity extends AppCompatActivity {
             startActivity(i);
         });
 
+        poster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showImage();
+            }
+        });
+
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         getEventById();
+    }
+
+    public void showImage() {
+        Dialog builder = new Dialog(this, android.R.style.Theme_Light);
+        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        builder.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                //nothing;
+            }
+        });
+
+        ImageView imageView = new ImageView(this);
+        Picasso.get().load(event.getBrosurEvent())
+                .into(imageView);
+        builder.addContentView(imageView, new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        builder.show();
     }
 
     public void getEventById() {
@@ -172,6 +207,7 @@ public class DetailEventActivity extends AppCompatActivity {
                     Picasso.get().load(event.getBrosurEvent())
                             .fit()
                             .into(poster);
+
 
                     // Periksa user id yang login dengan yang membuat event
                     // untuk menghilangkan button JOIN

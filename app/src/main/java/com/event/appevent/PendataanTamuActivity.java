@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +45,11 @@ public class PendataanTamuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pendataan_tamu);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
+
+        setSupportActionBar(toolbar);
 
         rec_data_tamu = this.findViewById(R.id.rec_data_tamu);
         scan = this.findViewById(R.id.btn_scan);

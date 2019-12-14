@@ -1,6 +1,5 @@
 package com.event.appevent.adapter;
 
-import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,7 +17,6 @@ import java.util.List;
 
 public class DataTamuAdapter extends RecyclerView.Adapter<DataTamuAdapter.DataTamuViewHolder> {
 
-    Context context;
     List<DataTamu> dataTamuList;
     Integer kehadiran;
     ImageView uncek;
@@ -33,14 +31,12 @@ public class DataTamuAdapter extends RecyclerView.Adapter<DataTamuAdapter.DataTa
     public DataTamuViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tamu, parent, false);
         DataTamuViewHolder mViewHolder = new DataTamuViewHolder(view);
-        Log.i("namaPeserta","Onkritviewholder");
         return mViewHolder;
     }
 
     class DataTamuViewHolder extends RecyclerView.ViewHolder {
 
         TextView namaPeserta;
-        //Integer kehadiran;
 
         public DataTamuViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -58,9 +54,8 @@ public class DataTamuAdapter extends RecyclerView.Adapter<DataTamuAdapter.DataTa
 
         dataTamuViewHolder.namaPeserta.setText(dataTamu.getName());
         kehadiran = dataTamu.getKehadiran();
-        Log.i("namaPeserta", dataTamu.getName());
-        Log.i("namaPeserta", "kehadiran    "+kehadiran);
 
+        // penanda kehadiran
         if(kehadiran==1){
             uncek.setVisibility(View.GONE);
             cek.setVisibility(View.VISIBLE);
@@ -68,14 +63,6 @@ public class DataTamuAdapter extends RecyclerView.Adapter<DataTamuAdapter.DataTa
             uncek.setVisibility(View.VISIBLE);
             cek.setVisibility(View.GONE);
         }
-
-//        if(session.getUserDetails().getId().equals(uIdEvent)){
-//            btn_join.setVisibility(View.GONE);
-//            btn_daftar_peserta.setVisibility(View.VISIBLE);
-//        } else {
-//            btn_join.setVisibility(View.VISIBLE);
-//            btn_daftar_peserta.setVisibility(View.GONE);
-//        }
 
     }
 

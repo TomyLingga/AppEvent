@@ -1,9 +1,7 @@
 package com.event.appevent.model;
 
-import com.google.gson.annotations.SerializedName;
 
 public class Event {
-    // @SerializedName("event")
     private Integer jumlahPeserta;
     private Boolean statusAda;
     private Integer id;

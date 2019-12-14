@@ -43,22 +43,24 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
+    //File picker
     implementation 'pub.devrel:easypermissions:1.2.0'
     implementation 'com.vincent.filepicker:MultiTypeFilePicker:1.0.7'
-
-    //File picker
     implementation 'com.fxn769:pix:1.4.4'
+
     //Okhttp Logger
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+
     //Qr Library
     implementation 'com.google.zxing:core:3.4.0'
     implementation 'me.dm7.barcodescanner:zxing:1.9'
     implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
 
-    //Mapbox lib
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:8.5.0'
     //Search
-   // implementation 'com.miguelcatalan:materialsearchview:1.4.0'
     implementation 'com.github.Ferfalk:SimpleSearchView:0.1.4'
+
+    //PhotoView
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+
 
 }

@@ -52,11 +52,7 @@ public class DaftarActivity extends AppCompatActivity {
 
             // panggil funtion kirimData()
             kirimData();
-
-
         });
-
-
     }
 
     private void kirimData(){
@@ -85,7 +81,6 @@ public class DaftarActivity extends AppCompatActivity {
                 } else{
                     Toast.makeText(getApplicationContext(), "Periksa kembali Email atau Password anda", Toast.LENGTH_LONG).show();
                 }
-
             }
 
             @Override

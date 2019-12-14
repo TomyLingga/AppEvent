@@ -1,7 +1,5 @@
 package com.event.appevent.model;
 
-import com.google.gson.annotations.SerializedName;
-
 public class DataTamu {
     Integer id;
     Integer eid;

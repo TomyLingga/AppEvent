@@ -90,6 +90,7 @@ public class TambahEventActivity extends AppCompatActivity {
         imageView                   = this.findViewById(R.id.ivAttachment);
         mApiInterface               = ApiClient.getClient().create(ApiInterface.class);
 
+        // date picker
         DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
@@ -97,6 +98,7 @@ public class TambahEventActivity extends AppCompatActivity {
             updateLabel();
         };
 
+        // time picker untuk isi jam event
         jamTambahEvent.setOnClickListener(view -> {
             //myCalendar = Calendar.getInstance();
             currentHour = myCalendar.get(Calendar.HOUR_OF_DAY);
@@ -108,12 +110,13 @@ public class TambahEventActivity extends AppCompatActivity {
                 } else {
                     amPm = " AM";
                 }
-                jamTambahEvent.setText(String.format("%02d:%02d", hourOfDay, minutes) + amPm);
+                jamTambahEvent.setText(String.format("%02d:%02d", hourOfDay, minutes) + amPm);  // format waktu 00:00 PM/AM
             }, currentHour, currentMinute, false);
 
             timePickerDialog.show();
         });
 
+        //panggil date picker saat isi tanggal
         tanggalTambahEvent.setOnClickListener(v -> {
             // TODO Auto-generated method stub
             new DatePickerDialog(TambahEventActivity.this, date, myCalendar
@@ -133,6 +136,7 @@ public class TambahEventActivity extends AppCompatActivity {
         inputFileBrosurTambahEvent.setOnClickListener(v -> imagePicker());
     }
 
+    // mengubah format tanggal yang di tampilkan
     private void updateLabel() {
         String myFormat = "dd MMMM yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -140,6 +144,7 @@ public class TambahEventActivity extends AppCompatActivity {
         tanggalTambahEvent.setText(sdf.format(myCalendar.getTime()));
     }
 
+    // image picker untuk upload brosur event
     protected void imagePicker(){
         Pix.start(TambahEventActivity.this, Options.init().setRequestCode(100));
     }
@@ -158,26 +163,30 @@ public class TambahEventActivity extends AppCompatActivity {
             }else{
                 Toast.makeText(getApplicationContext(), "Tolong upload brosur Event anda", Toast.LENGTH_LONG).show();
             }
+        }else {
+            Toast.makeText(getApplicationContext(), "Tolong upload brosur Event anda", Toast.LENGTH_LONG).show();
         }
     }
 
+    // Request Permission
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == PermUtil.REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS) {// If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 imagePicker();
             } else {
-                Toast.makeText(TambahEventActivity.this, "Approve permissions to open Pix ImagePicker", Toast.LENGTH_LONG).show();
+                Toast.makeText(TambahEventActivity.this, "Approve permissions untuk membuka Pix ImagePicker", Toast.LENGTH_LONG).show();
             }
         }
     }
 
+    // Alert dialog saat Menambahkan Event
     public void konfirmasiTambahEvent(){
         dialog = new AlertDialog.Builder(TambahEventActivity.this);
         inflater = getLayoutInflater();
         dialog.setCancelable(true);
 
-        dialog.setTitle("Tambah Event");
+        dialog.setTitle("Tambahkan Event Saya");
         dialog.setMessage("Data Event sudah benar?");
 
         dialog.setPositiveButton("Ya", (dialog, which) -> {
@@ -190,9 +199,18 @@ public class TambahEventActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    // fungsi tambah event
     private void tambahEventBaru() {
+        if(namaTambahEvent != null &&
+                myCalendar != null &&
+                jamTambahEvent != null &&
+                jumlahPesertaTambahEvent != null &&
+                lokasiTambahEvent != null &&
+                deskripsiTambahEvent != null &&
+                imagePosterPath != null){
         String namaEventRequest = namaTambahEvent.getText().toString().trim();
 
+        // sesuaikan format tanggal yang akan disimpan di database
         String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         String tanggalEventRequest = sdf.format(myCalendar.getTime()).trim();
@@ -201,6 +219,8 @@ public class TambahEventActivity extends AppCompatActivity {
         String jumlahPesertaEventRequest = jumlahPesertaTambahEvent.getText().toString().trim();
         String lokasiEventRequest = lokasiTambahEvent.getText().toString().trim();
         String deskripsiEventRequest = deskripsiTambahEvent.getText().toString().trim();
+
+        // mengambil user id yang buat Event
         String uidRequest = user.getId().toString();
 
         File file = new File(imagePosterPath);
@@ -225,6 +245,7 @@ public class TambahEventActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Intent returnIntent = new Intent();
                     setResult(Activity.RESULT_OK, returnIntent);
+                    Toast.makeText(getApplicationContext(), "Event berhasil di tambah", Toast.LENGTH_LONG).show();
                     finish();
                 } else{
                     Toast.makeText(getApplicationContext(), "unsukses", Toast.LENGTH_LONG).show();
@@ -237,5 +258,9 @@ public class TambahEventActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "gagal", Toast.LENGTH_LONG).show();
             }
         });
+        }else{
+            // Jika data Event belum lengkap di toast seperti ini
+            Toast.makeText(getApplicationContext(), "Data Event belum lengkap", Toast.LENGTH_LONG).show();
+        }
     }
 }

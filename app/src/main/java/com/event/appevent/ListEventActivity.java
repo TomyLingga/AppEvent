@@ -60,11 +60,11 @@ public class ListEventActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        rec_list_event = this.findViewById(R.id.rec_event);
+        rec_list_event = this.findViewById(R.id.rec_event); //recycler view
 
         FloatingActionButton btn_tambah_event = (FloatingActionButton) this.findViewById(R.id.btn_tambah_event);
 
-        session = new SharedPrefManager(getApplicationContext());
+        session = new SharedPrefManager(getApplicationContext());   //session login
 
         btn_tambah_event.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +79,8 @@ public class ListEventActivity extends AppCompatActivity {
 
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         refresh();
+
+        // fungsi search
         searchView = findViewById(R.id.searchView);
 
         searchView.setOnQueryTextListener(new SimpleSearchView.OnQueryTextListener() {
@@ -125,6 +127,7 @@ public class ListEventActivity extends AppCompatActivity {
         });
     }
 
+    // Buat fitur menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.header_menu, menu);
@@ -134,6 +137,7 @@ public class ListEventActivity extends AppCompatActivity {
         return true;
     }
 
+    // untuk merefresh list data event
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -144,15 +148,15 @@ public class ListEventActivity extends AppCompatActivity {
         }
     }
 
+    // fungsi tombol back
     @Override
     public void onBackPressed() {
-        if(searchView.isSearchOpen() || isSearch) {
+        if(searchView.isSearchOpen() || isSearch) {     // jika dalam mode search, reload semua data
             searchView.closeSearch();
             isSearch = false;
             refresh();
         } else {
-//            super.onBackPressed();
-            dialog = new AlertDialog.Builder(ListEventActivity.this);
+            dialog = new AlertDialog.Builder(ListEventActivity.this);  // jika tidak dalam mode search, panggil alert dialog
             inflater = getLayoutInflater();
             dialog.setCancelable(true);
 
@@ -170,6 +174,7 @@ public class ListEventActivity extends AppCompatActivity {
         }
     }
 
+    //Fungsi fitur Menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
