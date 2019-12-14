@@ -19,20 +19,25 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface ApiInterface {
-    @GET("login/{email}/{password}") //Route untuk login
+    //Route untuk login
+    @GET("login/{email}/{password}")
     Call<User>login(@Path("email") String email,
                     @Path("password") String password);
 
+    //Route untuk list semua Event
     @GET("event")
     Call<GetEvent> getEvent();
 
+    //Route untuk detail Event
     @GET("event/{id}/{uid}")
     Call<Event> getEventById(@Path("id") Integer id,
                              @Path("uid") Integer uid);
 
+    //Route untuk my Event
     @GET("event/user/{uid}")
     Call<GetEvent> getEventByUid(@Path("uid") Integer uid);
 
+    //Route untuk daftar akun
     @FormUrlEncoded
     @POST("register") //Route untuk daftar
     Call<User> register(
@@ -42,6 +47,7 @@ public interface ApiInterface {
             @Field("cpassword") String cpassword
     );
 
+    //Route untuk tambah Event
     @Multipart
     @POST("event/tambah")
     Call<ResponseEvent> tambahEvent(
@@ -56,6 +62,7 @@ public interface ApiInterface {
 
     );
 
+    //Route ambil data untuk Generate QR
     @FormUrlEncoded
     @POST("ticket/join")
     Call<Ticket> tambahTicket(
@@ -63,27 +70,32 @@ public interface ApiInterface {
             @Field("eid") Integer eid
     );
 
+    //Route untuk mengambil tiket milik seorang user dari suatu event
     @GET("ticket/{eid}/{uidMengikuti}")
     Call<Ticket> getTicketById(
             @Path("eid") String eid,
             @Path("uidMengikuti") String uid
     );
 
+    //Route untuk list data peserta yang join suatu event
     @GET("ticket/{eid}")
     Call<ListDataTamu> getDataPeserta(
             @Path("eid") Integer eid
             );
 
+    //Route untuk scan
     @GET("ticket/scan/{qrCode}")
     Call<Ticket> scanned(
             @Path("qrCode") String qrCode
     );
 
+    //Route untuk list event yang sudah dijoin seorang user
     @GET("event/mengikuti/{userId}")
     Call<GetEvent> mengikuti(
             @Path("userId") Integer userId
     );
 
+    //Route untuk search
     @GET("search/{cari}")
     Call<GetEvent> search(
             @Path("cari") String cari

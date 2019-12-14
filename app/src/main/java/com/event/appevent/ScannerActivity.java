@@ -1,30 +1,22 @@
 package com.event.appevent;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.event.appevent.model.Event;
 import com.event.appevent.model.Ticket;
 import com.event.appevent.network.ApiClient;
 import com.event.appevent.network.ApiInterface;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.Result;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
+
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
@@ -38,6 +30,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         mScannerView = new ZXingScannerView(this);
         setContentView(mScannerView);
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -53,12 +46,8 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
     @Override
     public void handleResult(Result rawResult) {
-//        Log.v("TAG", rawResult.getText()); // Prints scan results
-//        Log.v("TAG", rawResult.getBarcodeFormat().toString());
 
         qrCode = rawResult.getText();
-//        Log.i("haha","HAnDle  "+qrCode);
-
         mScannerView.resumeCameraPreview(this);
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         hadir();
@@ -67,22 +56,19 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         finish();
     }
 
-    public void hadir(){
+    public void hadir() {
         Call<Ticket> getHadir = mApiInterface.scanned(qrCode);
-//        Log.i("haha","HADIR  "+qrCode);
         getHadir.enqueue(new Callback<Ticket>() {
             @Override
             public void onResponse(retrofit2.Call<Ticket> call, Response<Ticket> response) {
 
-                Toast.makeText(getApplicationContext(), "SUKSES", Toast.LENGTH_LONG).show();
-
-//                Log.i("haha","HADIR SUKSES");
+                Toast.makeText(getApplicationContext(), "Data Peserta di Update", Toast.LENGTH_LONG).show();
 
             }
 
             @Override
             public void onFailure(Call<Ticket> call, Throwable t) {
-                Log.e("haha", t.toString());
+                Toast.makeText(getApplicationContext(), "GAGAL", Toast.LENGTH_LONG).show();
             }
         });
     }

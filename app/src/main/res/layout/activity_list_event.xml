@@ -16,7 +16,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="List Event" />
+            app:title="List Event"
+            android:background="@color/colorPrimary"/>
 
         <com.ferfalk.simplesearchview.SimpleSearchView
             android:id="@+id/searchView"

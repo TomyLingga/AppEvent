@@ -1,6 +1,7 @@
 package com.event.appevent;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -39,8 +40,6 @@ public class MengikutiActivity extends AppCompatActivity {
 
         if (session.isLoggedIn()) {
             user = session.getUserDetails();
-            Log.i("dataUser2", ""+user.toString());
-            Log.i("dataUser2", ""+user.getId());
 
         }
 
@@ -52,7 +51,7 @@ public class MengikutiActivity extends AppCompatActivity {
         mengikuti();
     }
 
-    public void mengikuti(){
+    public void mengikuti() {
         Call<GetEvent> mengikutiCall = mApiInterface.mengikuti(user.getId());
         mengikutiCall.enqueue(new Callback<GetEvent>() {
             @Override
@@ -65,7 +64,7 @@ public class MengikutiActivity extends AppCompatActivity {
                     rec_list_mengikuti_event.setAdapter(eventAdapter);
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Data Event tidak ada", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Data Event Tidak Ada", Toast.LENGTH_LONG).show();
 
                 }
             }

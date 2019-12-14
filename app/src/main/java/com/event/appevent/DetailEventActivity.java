@@ -1,12 +1,13 @@
 package com.event.appevent;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,7 +39,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DetailEventActivity extends AppCompatActivity {
-    Integer idEvent = 0 ;
+    Integer idEvent = 0;
     Integer uIdEvent = 0;
     ApiInterface mApiInterface;
     ImageView poster;
@@ -76,37 +77,32 @@ public class DetailEventActivity extends AppCompatActivity {
         detailTanggalEvent = this.findViewById(R.id.tv_tanggal_event_detail);
         detailDeskripsiEvent = this.findViewById(R.id.tv_deskripsi_event_detail);
 
-        //
+        //ambil waktu sekarang
         currentTime = Calendar.getInstance().getTime();
 
         Intent intent = getIntent();
-        idEvent = intent.getIntExtra("idEvent",0);
+        idEvent = intent.getIntExtra("idEvent", 0);
 
         session = new SharedPrefManager(getApplicationContext());
 
         if (session.isLoggedIn()) {
             user = session.getUserDetails();
-            Log.i("dataUser2", ""+user.getId());
         }
 
         uIdEvent = intent.getIntExtra("Uid", 0);
-        Log.i("user Id", uIdEvent.toString());
 
         btn_lihat_tiket.setOnClickListener(view -> {
             i = new Intent(DetailEventActivity.this, TiketActivity.class);
             Bundle extras = new Bundle();
-            extras.putString("EXTRA_uid",user.getId().toString());
-            extras.putString("EXTRA_eid",event.getId().toString());
-            extras.putString("EXTRA_namaEvent",event.getNamaEvent());
-            extras.putString("EXTRA_lokasiEvent",event.getLokasiEvent());
-            extras.putString("EXTRA_tanggalEvent",event.getTanggalEvent());
-            extras.putString("EXTRA_jamEvent",event.getJamEvent());
+            extras.putString("EXTRA_uid", user.getId().toString());
+            extras.putString("EXTRA_eid", event.getId().toString());
+            extras.putString("EXTRA_namaEvent", event.getNamaEvent());
+            extras.putString("EXTRA_lokasiEvent", event.getLokasiEvent());
+            extras.putString("EXTRA_tanggalEvent", event.getTanggalEvent());
+            extras.putString("EXTRA_jamEvent", event.getJamEvent());
 
             i.putExtras(extras);
-
-            Log.i("IdEvent",  "uid: "+user.getId()+" eid: "+event.getId());
-
-            startActivity(i);
+            startActivityForResult(i, 1);
             join();
         });
         btn_join.setOnClickListener(v -> {
@@ -119,30 +115,26 @@ public class DetailEventActivity extends AppCompatActivity {
             dialog.setPositiveButton("Ya", (dialog, which) -> {
                 i = new Intent(DetailEventActivity.this, TiketActivity.class);
                 Bundle extras = new Bundle();
-                extras.putString("EXTRA_uid",user.getId().toString());
-                extras.putString("EXTRA_eid",event.getId().toString());
-                extras.putString("EXTRA_namaEvent",event.getNamaEvent());
-                extras.putString("EXTRA_lokasiEvent",event.getLokasiEvent());
-                extras.putString("EXTRA_tanggalEvent",event.getTanggalEvent());
-                extras.putString("EXTRA_jamEvent",event.getJamEvent());
+                extras.putString("EXTRA_uid", user.getId().toString());
+                extras.putString("EXTRA_eid", event.getId().toString());
+                extras.putString("EXTRA_namaEvent", event.getNamaEvent());
+                extras.putString("EXTRA_lokasiEvent", event.getLokasiEvent());
+                extras.putString("EXTRA_tanggalEvent", event.getTanggalEvent());
+                extras.putString("EXTRA_jamEvent", event.getJamEvent());
 
                 i.putExtras(extras);
-
-                Log.i("IdEvent",  "uid: "+user.getId()+" eid: "+event.getId());
-
-                startActivity(i);
+                startActivityForResult(i, 1);
                 join();
                 dialog.dismiss();
             });
 
             dialog.setNegativeButton("Tidak", (dialog, which) -> dialog.dismiss());
-
             dialog.show();
         });
 
         btn_daftar_peserta.setOnClickListener(view -> {
             Intent i = new Intent(DetailEventActivity.this, PendataanTamuActivity.class);
-            i.putExtra("idEvent",event.getId());
+            i.putExtra("idEvent", event.getId());
             startActivity(i);
         });
 
@@ -157,6 +149,7 @@ public class DetailEventActivity extends AppCompatActivity {
         getEventById();
     }
 
+    // zoom image
     public void showImage() {
         Dialog builder = new Dialog(this, android.R.style.Theme_Light);
         builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -177,6 +170,16 @@ public class DetailEventActivity extends AppCompatActivity {
         builder.show();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                getEventById();
+            }
+        }
+    }
+
     public void getEventById() {
         Call<Event> eventCall = mApiInterface.getEventById(idEvent, user.getId());
         eventCall.enqueue(new Callback<Event>() {
@@ -192,6 +195,7 @@ public class DetailEventActivity extends AppCompatActivity {
                     detailLokasiEvent.setText(event.getLokasiEvent());
                     detailJamEvent.setText(event.getJamEvent());
 
+                    // Format penulisan tanggal event
                     String myStrDate = event.getTanggalEvent();
                     SimpleDateFormat formatInput = new SimpleDateFormat("yyyy-MM-dd");
                     SimpleDateFormat formatOutput = new SimpleDateFormat("dd MMMM yyyy");
@@ -208,12 +212,11 @@ public class DetailEventActivity extends AppCompatActivity {
                             .fit()
                             .into(poster);
 
-
-                    // Periksa user id yang login dengan yang membuat event
-                    // untuk menghilangkan button JOIN
-
                     Boolean status = event.getStatusAda();
-                    if(session.getUserDetails().getId().equals(uIdEvent)){
+
+                    // kalau pemilik event membuka detail event, tombol daftar peserta dimunculkan
+                    // tombol lain hilang
+                    if (session.getUserDetails().getId().equals(uIdEvent)) {
                         btn_join.setVisibility(View.GONE);
                         btn_lihat_tiket.setVisibility(View.GONE);
                         btn_daftar_peserta.setVisibility(View.VISIBLE);
@@ -222,32 +225,30 @@ public class DetailEventActivity extends AppCompatActivity {
                         SimpleDateFormat tf = new SimpleDateFormat("HH:mm");
                         String formattedDate = df.format(currentTime);
                         String formattedTime = tf.format(currentTime);
-                        Log.i("waktu","jam formatted"+formattedTime);
-                        Log.i("waktu","jam current"+currentTime.toString());
+                        String waktuSekarang = formattedDate + " " + formattedTime;
+                        String waktuEvent = event.getTanggalEvent() + " " + event.getJamEvent();
 
-                        String waktuSekarang = formattedDate+" "+formattedTime;
-                        String waktuEvent = event.getTanggalEvent()+" "+event.getJamEvent();
-
-                        Log.i("waktu","jam waktusekarang"+waktuSekarang);
-                        Log.i("waktu","jam waktuevent"+waktuEvent);
-
-                        if(waktuSekarang.compareTo(waktuEvent) >= 0) {
+                        // pengecekan event masih tersedia atau tidak
+                        if (waktuSekarang.compareTo(waktuEvent) >= 0) {
                             btn_join.setEnabled(false);
-                            btn_join.setText("Event telah berlalu");
+                            btn_join.setText("Event Telah Kedaluwarsa");
                             btn_join.setBackgroundColor(getResources().getColor(R.color.colorGrey));
 
                         }
 
-                        if(status) {
+                        // pengecekan apakah user sudah join atau belum
+                        if (status) {
                             btn_join.setVisibility(View.GONE);
                             btn_lihat_tiket.setVisibility(View.VISIBLE);
                             btn_daftar_peserta.setVisibility(View.GONE);
                         } else {
-                            if(event.getJumlahPeserta().equals(event.getJumlahPesertaEvent())) {
+
+                            // pengecekan max jumlah peserta event dengan yang sudah join
+                            if (event.getJumlahPeserta().equals(event.getJumlahPesertaEvent())) {
                                 btn_join.setEnabled(false);
                                 btn_join.setText("Kuota Habis");
                                 btn_join.setBackgroundColor(getResources().getColor(R.color.colorGrey));
-                            }else if(event.getJumlahPesertaEvent()>event.getJumlahPeserta()){
+                            } else if (event.getJumlahPesertaEvent() > event.getJumlahPeserta()) {
                                 btn_join.setVisibility(View.VISIBLE);
                                 btn_lihat_tiket.setVisibility(View.GONE);
                                 btn_daftar_peserta.setVisibility(View.GONE);
@@ -255,19 +256,18 @@ public class DetailEventActivity extends AppCompatActivity {
                         }
 
 
-
-
-
                     }
 
+                    // Jika klik text view lokasi event, maka akan di arahkan ke Google Maps Navigation
+                    // dan mencari lokasi Event
                     detailLokasiEvent.setOnClickListener(view -> {
                         Intent i = new Intent(Intent.ACTION_VIEW,
-                                Uri.parse("google.navigation:q="+event.getLokasiEvent()));
+                                Uri.parse("google.navigation:q=" + event.getLokasiEvent()));
                         startActivity(i);
                     });
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Data Event tidak ada", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Data Event Tidak Ada", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -279,23 +279,23 @@ public class DetailEventActivity extends AppCompatActivity {
         });
     }
 
+    //fungsi join Event
     public void join() {
 
         uid = user.getId();
         eid = event.getId();
         Call<Ticket> eventCall = mApiInterface.tambahTicket(uid, eid);
-            eventCall.enqueue(new Callback<Ticket>() {
-                @Override
-                public void onResponse(Call<Ticket> call, Response<Ticket> response) {
-                    Toast.makeText(getApplicationContext(),"berhasil", Toast.LENGTH_LONG).show();
-                    Log.i("Retrofit Get", response.toString());
+        eventCall.enqueue(new Callback<Ticket>() {
+            @Override
+            public void onResponse(Call<Ticket> call, Response<Ticket> response) {
+                Toast.makeText(getApplicationContext(), "Join Berhasil", Toast.LENGTH_LONG).show();
+                Log.i("Retrofit Get", response.toString());
+            }
 
-                }
-
-                @Override
-                public void onFailure(Call<Ticket> call, Throwable t) {
-                    Log.e("Retrofit Get", t.toString());
-                }
-            });
+            @Override
+            public void onFailure(Call<Ticket> call, Throwable t) {
+                Log.e("Retrofit Get", t.toString());
+            }
+        });
     }
 }

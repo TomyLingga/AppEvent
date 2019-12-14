@@ -2,10 +2,10 @@ package com.event.appevent;
 
 import android.app.Activity;
 import android.content.Intent;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,18 +33,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Session Manager
+        session = new SharedPrefManager(getApplicationContext());
+        session.checkLogin();
+
         // set value xml
         btn_login = this.findViewById(R.id.btn_login);      //tombol login
         tv_register = this.findViewById(R.id.tv_register);  //text view register
         email = this.findViewById(R.id.edit_email);         //edit text untuk mengisi email
         password = this.findViewById(R.id.edit_password);   //edit text untuk mengisi password
 
-        // Session Manager
-        session = new SharedPrefManager(getApplicationContext());
+
 
         // onclick tombol login panggil function login()
         btn_login.setOnClickListener(view ->
-            login()
+                login()
         );
 
         //onclick text view register, masuk ke halaman register
@@ -63,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
+            if (resultCode == Activity.RESULT_OK) {
                 login();
             }
         }
@@ -78,22 +81,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User>
                     response) {
-                if(response.body() != null) {       //kalau responnya gak kosong
+                if (response.body() != null) {
                     User user = response.body();
 
                     session.createLoginSession(user);
                     session.getUserDetails();
-                    Toast.makeText(getApplicationContext(), "Selamat Datang "+user.getName(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Selamat Datang " + user.getName(), Toast.LENGTH_LONG).show();
                     finish();
 
-                } else {                            //kalau responnya kosong
-                    Toast.makeText(getApplicationContext(), "Email atau password salah", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Email atau Password Salah", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Periksa koneksi internet anda", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Periksa Koneksi Internet Anda", Toast.LENGTH_LONG).show();
             }
         });
     }

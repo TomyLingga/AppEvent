@@ -1,29 +1,24 @@
 package com.event.appevent;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.event.appevent.adapter.DataTamuAdapter;
-import com.event.appevent.adapter.EventAdapter;
 import com.event.appevent.model.DataTamu;
-import com.event.appevent.model.GetEvent;
 import com.event.appevent.model.ListDataTamu;
-import com.event.appevent.model.Ticket;
 import com.event.appevent.network.ApiClient;
 import com.event.appevent.network.ApiInterface;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -39,8 +34,6 @@ public class PendataanTamuActivity extends AppCompatActivity {
     Integer idEvent = 0;
     Button scan;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +41,15 @@ public class PendataanTamuActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
-
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.getNavigationIcon().setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+        toolbar.setNavigationOnClickListener(v -> {
+            super.onBackPressed();
+            finish();
+        });
 
         rec_data_tamu = this.findViewById(R.id.rec_data_tamu);
         scan = this.findViewById(R.id.btn_scan);
@@ -60,29 +60,27 @@ public class PendataanTamuActivity extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        idEvent = intent.getIntExtra("idEvent" , 0);
-        Log.i("haha", "id - " + idEvent);
+        idEvent = intent.getIntExtra("idEvent", 0);
 
         rec_data_tamu.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rec_data_tamu.setLayoutManager(layoutManager);
-
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
 
         getDataPeserta();
 
     }
 
+    //onActivityResult
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
+            if (resultCode == Activity.RESULT_OK) {
                 getDataPeserta();
             }
         }
-    }//onActivityResult
+    }
 
     public void getDataPeserta() {
         Call<ListDataTamu> tamuCall = mApiInterface.getDataPeserta(idEvent);
@@ -92,14 +90,11 @@ public class PendataanTamuActivity extends AppCompatActivity {
                     response) {
                 if (response.body() != null) {
                     dataTamuList = response.body().getListDataTamu();
-
-                    Log.i("haha","  "+dataTamuList);
-
                     dataTamuAdapter = new DataTamuAdapter(dataTamuList);
                     rec_data_tamu.setAdapter(dataTamuAdapter);
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Data Tamu tidak ada", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Data Peserta Tidak Ada", Toast.LENGTH_LONG).show();
 
                 }
             }

@@ -99,7 +99,8 @@
         <activity
             android:name=".TiketActivity"
             android:label="Tiket Anda"
-            android:noHistory="true"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

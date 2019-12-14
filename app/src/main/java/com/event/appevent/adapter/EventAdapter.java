@@ -3,8 +3,10 @@ package com.event.appevent.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,11 +39,12 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
     @NonNull
     @Override
-    public EventViewHolder onCreateViewHolder (ViewGroup parent,int viewType){
+    public EventViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_event, parent, false);
         EventViewHolder mViewHolder = new EventViewHolder(mView);
         return mViewHolder;
     }
+
     @Override
     public void onBindViewHolder(@NonNull EventViewHolder eventViewHolder, int i) {
 
@@ -57,7 +60,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
                 .into(eventViewHolder.eventpicture);
 
         // pengecekan apakah user yang login = user yang punya event diberi penanda
-        if(event.getUid().equals(uId)) {
+        if (event.getUid().equals(uId)) {
             eventViewHolder.eventauthor.setVisibility(View.VISIBLE);
         }
 

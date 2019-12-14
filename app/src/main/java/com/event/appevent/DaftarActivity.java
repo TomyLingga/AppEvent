@@ -3,9 +3,9 @@ package com.event.appevent;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -14,15 +14,9 @@ import com.event.appevent.model.User;
 import com.event.appevent.network.ApiClient;
 import com.event.appevent.network.ApiInterface;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static com.event.appevent.network.ApiClient.BASE_URL;
 
 public class DaftarActivity extends AppCompatActivity {
     EditText daftarUsername;
@@ -55,10 +49,9 @@ public class DaftarActivity extends AppCompatActivity {
         });
     }
 
-    private void kirimData(){
+    private void kirimData() {
         // data2 yang sudah diisi tampung ke variable baru
         String namaUser = daftarUsername.getText().toString().trim();
-        Log.i("nama User", "nama = "+namaUser);
         String passwordUser = daftarPassword.getText().toString().trim();
         String password2User = daftarPassword2.getText().toString().trim();
         String emailUser = daftarEmail.getText().toString().trim();
@@ -71,15 +64,15 @@ public class DaftarActivity extends AppCompatActivity {
                     response) {
 
                 if (response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(),"Register Berhasil", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Register Berhasil", Toast.LENGTH_LONG).show();
 
                     Intent returnIntent = new Intent();            // Balik ke activity sebelumnya (login)
                     setResult(Activity.RESULT_OK, returnIntent);
 
                     //supaya kalau di tekan back tidak balik ke activity ini lagi tambah kan method finish()
                     finish();
-                } else{
-                    Toast.makeText(getApplicationContext(), "Periksa kembali Email atau Password anda", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Periksa Kembali Email atau Password Anda", Toast.LENGTH_LONG).show();
                 }
             }
 

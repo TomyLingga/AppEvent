@@ -29,13 +29,13 @@ public class SharedPrefManager {
     public static final String KEY_USER = "user_session";
 
     // Constructor
-    public SharedPrefManager(Context context){
+    public SharedPrefManager(Context context) {
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
     }
 
-    public void createLoginSession(User user){
+    public void createLoginSession(User user) {
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -62,14 +62,14 @@ public class SharedPrefManager {
         _context.startActivity(i);
     }
 
-    public User getUserDetails(){
+    public User getUserDetails() {
         Gson gson = new Gson();
         String json = pref.getString(KEY_USER, null);
         User user = gson.fromJson(json, User.class);
         return user;
     }
 
-    public void logoutUser(){
+    public void logoutUser() {
         // Clearing all data from Shared Preferences
         editor.clear();
         editor.commit();
@@ -86,26 +86,25 @@ public class SharedPrefManager {
         _context.startActivity(i);
     }
 
+    public void checkLogin() {
+        // Check login status
+        if (!this.isLoggedIn()) {
+            // user is not logged in redirect him to Login Activity
+            Intent i = new Intent(_context, MainActivity.class);
+            // Closing all the Activities
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-    public boolean isLoggedIn(){
-        return pref.getBoolean(IS_LOGIN, false);
+            // Add new Flag to start new Activity
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            // Staring Login Activity
+            _context.startActivity(i);
+        }
+
     }
 
-    //    public void checkLogin(){
-//        // Check login status
-//        if(!this.isLoggedIn()){
-//            // user is not logged in redirect him to Login Activity
-//            Intent i = new Intent(_context, MainActivity.class);
-//            // Closing all the Activities
-//            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//
-//            // Add new Flag to start new Activity
-//            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//            // Staring Login Activity
-//            _context.startActivity(i);
-//        }
-//
-//    }
+    public boolean isLoggedIn() {
+        return pref.getBoolean(IS_LOGIN, false);
+    }
 
 }

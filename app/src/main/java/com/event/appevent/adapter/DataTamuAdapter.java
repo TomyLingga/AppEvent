@@ -56,10 +56,10 @@ public class DataTamuAdapter extends RecyclerView.Adapter<DataTamuAdapter.DataTa
         kehadiran = dataTamu.getKehadiran();
 
         // penanda kehadiran
-        if(kehadiran==1){
+        if (kehadiran == 1) {
             uncek.setVisibility(View.GONE);
             cek.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             uncek.setVisibility(View.VISIBLE);
             cek.setVisibility(View.GONE);
         }

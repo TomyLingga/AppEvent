@@ -1,11 +1,12 @@
 package com.event.appevent;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.event.appevent.adapter.EventAdapter;
 import com.event.appevent.model.Event;
@@ -29,7 +30,6 @@ public class MyEventActivity extends AppCompatActivity {
     User user;
     SharedPrefManager session;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,16 +39,11 @@ public class MyEventActivity extends AppCompatActivity {
 
         if (session.isLoggedIn()) {
             user = session.getUserDetails();
-            Log.i("dataUser2", ""+user.toString());
-            Log.i("dataUser2", ""+user.getId());
-
-
         }
 
         rec_list_event = this.findViewById(R.id.rec_event_saya);
         rec_list_event.setLayoutManager(new GridLayoutManager(this, 2));
         rec_list_event.setHasFixedSize(true);
-
 
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         refresh();
@@ -56,7 +51,6 @@ public class MyEventActivity extends AppCompatActivity {
     }
 
     public void refresh() {
-        Log.i("dataUser3", ""+user.getId());
         Call<GetEvent> eventCall = mApiInterface.getEventByUid(user.getId());
         eventCall.enqueue(new Callback<GetEvent>() {
             @Override
@@ -69,7 +63,7 @@ public class MyEventActivity extends AppCompatActivity {
                     rec_list_event.setAdapter(eventAdapter);
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Data Event tidak ada", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Data Event Tidak Ada", Toast.LENGTH_LONG).show();
 
                 }
             }

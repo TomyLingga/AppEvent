@@ -7,18 +7,18 @@ import android.os.Bundle;
 
 import com.ferfalk.simplesearchview.SimpleSearchView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.event.appevent.adapter.EventAdapter;
@@ -27,10 +27,6 @@ import com.event.appevent.model.GetEvent;
 import com.event.appevent.network.ApiClient;
 import com.event.appevent.network.ApiInterface;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -49,7 +45,6 @@ public class ListEventActivity extends AppCompatActivity {
     AlertDialog.Builder dialog;
     LayoutInflater inflater;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,11 +55,13 @@ public class ListEventActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        rec_list_event = this.findViewById(R.id.rec_event); //recycler view
+        //recycler view
+        rec_list_event = this.findViewById(R.id.rec_event);
 
         FloatingActionButton btn_tambah_event = (FloatingActionButton) this.findViewById(R.id.btn_tambah_event);
 
-        session = new SharedPrefManager(getApplicationContext());   //session login
+        //session login
+        session = new SharedPrefManager(getApplicationContext());
 
         btn_tambah_event.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,7 +139,7 @@ public class ListEventActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
+            if (resultCode == Activity.RESULT_OK) {
                 refresh();
             }
         }
@@ -151,7 +148,7 @@ public class ListEventActivity extends AppCompatActivity {
     // fungsi tombol back
     @Override
     public void onBackPressed() {
-        if(searchView.isSearchOpen() || isSearch) {     // jika dalam mode search, reload semua data
+        if (searchView.isSearchOpen() || isSearch) {     // jika dalam mode search, reload semua data
             searchView.closeSearch();
             isSearch = false;
             refresh();
@@ -188,6 +185,7 @@ public class ListEventActivity extends AppCompatActivity {
                 return true;
             case R.id.header3:
                 session.logoutUser();
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);

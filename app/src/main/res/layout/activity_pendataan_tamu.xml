@@ -7,30 +7,18 @@
     tools:context=".PendataanTamuActivity"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
-        android:layout_alignParentTop="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
-
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/list_peserta"
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar2"
+                    android:layout_alignParentTop="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="List Peserta"
-                    android:textSize="18sp"
-                    android:textColor="@color/colorWhite"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="10dp"/>
-                    <!--android:layout_toStartOf="@+id/btn_menu"-->
-
+                    android:background="@color/colorPrimary"
+                    app:title="Daftar Peserta">
+                </androidx.appcompat.widget.Toolbar>
 
                 <Button
                     android:id="@+id/btn_scan"
@@ -40,11 +28,10 @@
                     android:padding="10dp"
                     android:layout_marginEnd="23dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:layout_alignParentEnd="true"/>
 
             </RelativeLayout>
-    </androidx.appcompat.widget.Toolbar>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
