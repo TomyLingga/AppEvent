@@ -46,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         // onclick tombol login panggil function login()
-        btn_login.setOnClickListener(view ->
-                login()
-        );
+        btn_login.setOnClickListener(view ->{
+                login();
+        });
 
         //onclick text view register, masuk ke halaman register
         tv_register.setOnClickListener(v -> {

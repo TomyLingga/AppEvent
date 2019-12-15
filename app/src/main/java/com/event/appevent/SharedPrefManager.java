@@ -99,7 +99,7 @@ public class SharedPrefManager {
 
             // Staring Login Activity
             _context.startActivity(i);
-//        }else {
+//        }else if (!this.isLoggedIn(){
 //            // user is not logged in redirect him to Login Activity
 //            Intent i = new Intent(_context, MainActivity.class);
 //            // Closing all the Activities

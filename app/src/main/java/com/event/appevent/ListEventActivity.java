@@ -49,6 +49,8 @@ public class ListEventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_event);
+        //session login
+        session = new SharedPrefManager(getApplicationContext());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
@@ -60,8 +62,7 @@ public class ListEventActivity extends AppCompatActivity {
 
         FloatingActionButton btn_tambah_event = (FloatingActionButton) this.findViewById(R.id.btn_tambah_event);
 
-        //session login
-        session = new SharedPrefManager(getApplicationContext());
+
 
         btn_tambah_event.setOnClickListener(new View.OnClickListener() {
             @Override
