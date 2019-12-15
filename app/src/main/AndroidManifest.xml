@@ -78,7 +78,8 @@
         <activity
             android:name=".ListEventActivity"
             android:label="ListEvent"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:noHistory="true"/>
         <activity
             android:name=".DaftarActivity"
             android:label="Daftar" />
@@ -94,7 +95,7 @@
             android:label="Tambah Event">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ListEventActivity" />
+                android:value=".ListEventActivity"/>
         </activity>
         <activity
             android:name=".TiketActivity"

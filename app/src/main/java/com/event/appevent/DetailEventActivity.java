@@ -153,12 +153,9 @@ public class DetailEventActivity extends AppCompatActivity {
     public void showImage() {
         Dialog builder = new Dialog(this, android.R.style.Theme_Light);
         builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        builder.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
-        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                //nothing;
-            }
+        builder.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        builder.setOnDismissListener(dialogInterface -> {
+            //nothing;
         });
 
         ImageView imageView = new ImageView(this);

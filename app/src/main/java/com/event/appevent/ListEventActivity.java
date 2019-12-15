@@ -163,6 +163,7 @@ public class ListEventActivity extends AppCompatActivity {
             dialog.setPositiveButton("Ya", (dialog, which) -> {
                 ListEventActivity.super.onBackPressed();
                 dialog.dismiss();
+                //finish();
             });
 
             dialog.setNegativeButton("Tidak", (dialog, which) -> dialog.dismiss());

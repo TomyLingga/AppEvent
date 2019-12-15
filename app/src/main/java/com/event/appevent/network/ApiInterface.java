@@ -9,6 +9,7 @@ import com.event.appevent.model.User;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -99,5 +100,11 @@ public interface ApiInterface {
     @GET("search/{cari}")
     Call<GetEvent> search(
             @Path("cari") String cari
+    );
+
+    //Route cetak PDF
+    @GET("ticket/cetak_pdf/{eid}")
+    Call<ResponseBody> getPdf(
+            @Path("eid") Integer eid
     );
 }
