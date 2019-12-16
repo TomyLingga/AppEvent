@@ -88,9 +88,9 @@ public class SharedPrefManager {
 
     public void checkLogin() {
         // Check login status
-        if (this.isLoggedIn()) {
-            // user is logged in redirect him to List Event Activity
-            Intent i = new Intent(_context, ListEventActivity.class);
+        if (!this.isLoggedIn()) {
+            // user is not logged in redirect him to Login Activity
+            Intent i = new Intent(_context, MainActivity.class);
             // Closing all the Activities
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 

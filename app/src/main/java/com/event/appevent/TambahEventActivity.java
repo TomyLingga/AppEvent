@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -155,6 +156,7 @@ public class TambahEventActivity extends AppCompatActivity {
                 imageView.setImageBitmap(bm);
                 File file = new File(imagePosterPath);
                 inputNamaBrosurTambahEvent.setText(file.getName());
+                imageView.setVisibility(View.VISIBLE);
             } else {
                 Toast.makeText(getApplicationContext(), "Tolong upload brosur Event anda", Toast.LENGTH_LONG).show();
             }
