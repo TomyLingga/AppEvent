@@ -51,6 +51,7 @@ public class ListEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_event);
         //session login
         session = new SharedPrefManager(getApplicationContext());
+        session.checkLogin();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));

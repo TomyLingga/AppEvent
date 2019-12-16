@@ -33,10 +33,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Session Manager
-        session = new SharedPrefManager(getApplicationContext());
-        session.checkLogin();
-
         // set value xml
         btn_login = this.findViewById(R.id.btn_login);      //tombol login
         tv_register = this.findViewById(R.id.tv_register);  //text view register
